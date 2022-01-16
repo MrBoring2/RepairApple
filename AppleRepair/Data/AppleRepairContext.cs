@@ -18,6 +18,7 @@ namespace AppleRepair.Data
         public virtual DbSet<Material> Material { get; set; }
         public virtual DbSet<MaterialInDelivery> MaterialInDelivery { get; set; }
         public virtual DbSet<MaterialToOrder> MaterialToOrder { get; set; }
+        public virtual DbSet<MaterialType> MaterialType { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<PhoneModel> PhoneModel { get; set; }
         public virtual DbSet<Role> Role { get; set; }
@@ -88,6 +89,10 @@ namespace AppleRepair.Data
                 .HasMany(e => e.PhoneModel)
                 .WithMany(e => e.Material)
                 .Map(m => m.ToTable("AvailableMaterialsForModel").MapLeftKey("MaterialId").MapRightKey("ModelId"));
+
+            modelBuilder.Entity<MaterialType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.Status)

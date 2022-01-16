@@ -13,6 +13,7 @@
       
                 <ResourceDictionary Source="/Resources/Styles/WindowStyle.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles/ListViewStyle.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/MainControlsTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

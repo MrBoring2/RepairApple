@@ -76,6 +76,8 @@ namespace AppleRepair.Views.Windows
                 //}
                 //db.SaveChanges();
 
+
+
                 IsBtnEnabled = false;
                 Employee user = null;
                 await Task.Run(() => user = db.Employee.FirstOrDefault(p => p.Login.Equals(Login) && p.Password.Equals(Password)));

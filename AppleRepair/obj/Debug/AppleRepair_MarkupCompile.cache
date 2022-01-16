@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\App.xaml
-7-1729099166
+8-1191471835
 
-251163091775
+29-2081553104
 2610759070
-Resources\Styles\ListViewStyle.xaml;Resources\Styles\WindowStyle.xaml;Views\Pages\MaterialsListPage.xaml;Views\Pages\ModelsListPage.xaml;Views\Pages\OrdersListPage.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainAppWindow.xaml;
+Resources\Styles\ListViewStyle.xaml;Resources\Styles\MainControlsTemplates.xaml;Resources\Styles\WindowStyle.xaml;Views\Pages\MaterialsListPage.xaml;Views\Pages\ModelsListPage.xaml;Views\Pages\OrdersListPage.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainAppWindow.xaml;
 
 False
 

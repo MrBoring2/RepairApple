@@ -101,5 +101,10 @@ namespace AppleRepair.Views.Windows
                     break;
             }
         }
+
+        private  void BaseWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

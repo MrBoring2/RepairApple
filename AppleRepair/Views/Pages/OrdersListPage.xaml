@@ -8,14 +8,14 @@
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      d:DesignHeight="600" d:DesignWidth="1100"
+      d:DesignHeight="900" d:DesignWidth="1100" Loaded="BasePage_Loaded"
       Title="OrderPage" >
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="323*"/>
-            <RowDefinition Height="67*"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -26,14 +26,14 @@
             <TextBox VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите номер заказа или ФИО клиента для поиска..." FontSize="16" Grid.ColumnSpan="3" Height="30"/>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10">
                 <TextBlock Text="Модель телефона" FontSize="14" TextAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding Models}"/>
+                <ComboBox ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel}"/>
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10" Grid.Column="3">
                 <TextBlock Text="Сортировка" FontSize="14" TextAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding SortParams}"/>
+                <ComboBox ItemsSource="{Binding SortParams}" SelectedItem="{Binding SelectedSort}"/>
             </StackPanel>
         </Grid>
-        <DataGrid Grid.Row="1">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding DisplayedOrders}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер заказа" Width="*"/>
                 <DataGridTextColumn Header="Клиент" Width="*"/>
@@ -43,7 +43,22 @@
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
-
+            <StackPanel Orientation="Horizontal" Name="PaginatorPanel" HorizontalAlignment="Center"  Grid.Row="1" Grid.RowSpan="1">
+                <Button x:Name="ToFirst"  Click="ToFirst_Click" Content="«" Margin="0,7.5,0,7.5" Foreground="White" Height="35" Width="50" FontSize="20" Cursor="Hand"/>
+                <ListView Margin="5,7.5" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource paginator}" SelectedItem="{Binding Paginator.SelectedPageNumber}" x:Name="PagesList" HorizontalAlignment="Stretch" Height="Auto" ItemsSource="{Binding Paginator.DisplayedPagesNumbers}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" Height="20" Width="45" FontSize="18" TextAlignment="Center"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+                <Button x:Name="ToLast" TextBlock.TextAlignment="Center" Foreground="White" Click="ToLast_Click" Content="»" Margin="0" Height="35" Width="50" FontSize="20" />
+            </StackPanel>
         </Grid>
 
 

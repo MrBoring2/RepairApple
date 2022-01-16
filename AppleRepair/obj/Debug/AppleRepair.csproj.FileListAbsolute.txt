@@ -87,7 +87,6 @@ C:\Users\MrBoring\GIT\RepairApple\AppleRepair\bin\Debug\ControlzEx.pdb
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\bin\Debug\ControlzEx.xml
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\bin\Debug\Microsoft.Xaml.Behaviors.xml
-C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\MaterialsListPage.g.cs
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\OrdersListPage.g.cs
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\LoginWindow.g.cs
@@ -99,3 +98,5 @@ C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\MainAppWin
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Resources\Styles\ListViewStyle.baml
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\ModelsListPage.g.cs
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\ModelsListPage.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Resources\Styles\MainControlsTemplates.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache

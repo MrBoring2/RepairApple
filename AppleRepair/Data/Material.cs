@@ -7,7 +7,7 @@ namespace AppleRepair.Data
     using System.Data.Entity.Spatial;
 
     [Table("Material")]
-    public partial class Material
+    public partial class Material : BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Material()
@@ -26,6 +26,10 @@ namespace AppleRepair.Data
         public double Price { get; set; }
 
         public int Amount { get; set; }
+
+        public int? MaterialTypeId { get; set; }
+
+        public virtual MaterialType MaterialType { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialInDelivery> MaterialInDelivery { get; set; }
