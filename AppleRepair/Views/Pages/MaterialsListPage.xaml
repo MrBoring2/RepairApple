@@ -26,19 +26,19 @@
             <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите название для поиска..." FontSize="16" Grid.ColumnSpan="3" Height="30" Cursor="IBeam"/>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10">
                 <TextBlock Text="Тип материала" FontSize="14" TextAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding MaterialTypes}" SelectedItem="{Binding SelectedMaterialType}"/>
+                <ComboBox FontSize="15"  ItemsSource="{Binding MaterialTypes}" SelectedItem="{Binding SelectedMaterialType}"/>
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10" Grid.Column="3">
                 <TextBlock Text="Сортировка" FontSize="14" TextAlignment="Center"/>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox ItemsSource="{Binding SortParams}" DisplayMemberPath="Title" Width="150" SelectedItem="{Binding SelectedSort}"/>
+                    <ComboBox FontSize="15" ItemsSource="{Binding SortParams}" DisplayMemberPath="Title" Width="150" SelectedItem="{Binding SelectedSort}"/>
 
                     <TextBlock Margin="5,0,0,0" Text="По возратсанию" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <CheckBox IsChecked="{Binding IsAcsending}" HorizontalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <DataGrid CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding DisplayedMaterials}" AutoGenerateColumns="False">
+        <DataGrid CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding DisplayedMaterials}" SelectedItem="{Binding SelectedMaterial}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="2*" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Цена" Width="*" Binding="{Binding Price, StringFormat={}{0} ₽}"/>

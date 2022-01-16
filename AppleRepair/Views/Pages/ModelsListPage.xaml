@@ -8,11 +8,51 @@
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="900" d:DesignWidth="1100"
       Title="ModelsListPage">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="267,176,0,0" TextWrapping="Wrap" Text="Модели" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="323*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160*"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="120*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите название для поиска..." FontSize="16" Grid.ColumnSpan="3" Height="30" Cursor="IBeam"/>
+            <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10">
+                <TextBlock Text="Цвет модели" FontSize="14" TextAlignment="Center"/>
+                <ComboBox FontSize="15"  ItemsSource="{Binding Colors}" SelectedItem="{Binding SelectedColor}"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,15" Grid.Column="3">
+                <TextBlock Text="Сортировка" FontSize="14" TextAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <TextBlock Margin="5,0,0,0" Text="По возратсанию" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <CheckBox IsChecked="{Binding IsAcsending}" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <DataGrid CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding DisplayedModels}" SelectedItem="{Binding SelectedModel}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Width="2*" Binding="{Binding ModelName}"/>
+                <DataGridTextColumn Header="Цвет" Width="*" Binding="{Binding Color}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Height="40" Orientation="Horizontal">
+                <Button Foreground="White" x:Name="ToFirst" Content="«" Width="50" FontSize="20" Click="ToFirst_Click"/>
+                <Button Foreground="White" x:Name="Back" Content="←" Width="50" FontSize="20" Margin="5,0,0,0" Click="Back_Click"/>
+                <TextBlock Width="50" Height="25" FontSize="16" Margin="5,0,5,0" Text="{Binding DisplayedPages}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                <Button Foreground="White" x:Name="Forward" Content="→" Width="50" FontSize="20" Margin="0,0,5,0" Click="Forward_Click"/>
+                <Button Foreground="White" x:Name="ToLast" Content="»" Width="50" FontSize="20" Click="ToLast_Click"/>
+            </StackPanel>
+        </Grid>
+
 
     </Grid>
 </local:BasePage>

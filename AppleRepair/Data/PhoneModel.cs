@@ -7,7 +7,7 @@ namespace AppleRepair.Data
     using System.Data.Entity.Spatial;
 
     [Table("PhoneModel")]
-    public partial class PhoneModel
+    public partial class PhoneModel : BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhoneModel()
