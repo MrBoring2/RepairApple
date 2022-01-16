@@ -8,7 +8,7 @@ namespace AppleRepair.Data
     public partial class AppleRepairContext : DbContext
     {
         public AppleRepairContext()
-            : base("name=AppleRepairContext")
+            : base("name=AppleRepairContextHome")
         {
         }
 
@@ -74,10 +74,6 @@ namespace AppleRepair.Data
                 .IsUnicode(false);
 
             modelBuilder.Entity<Material>()
-                .Property(e => e.Amount)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Material>()
                 .HasMany(e => e.MaterialInDelivery)
                 .WithRequired(e => e.Material)
                 .WillCascadeOnDelete(false);
@@ -85,7 +81,13 @@ namespace AppleRepair.Data
             modelBuilder.Entity<Material>()
                 .HasMany(e => e.MaterialToOrder)
                 .WithRequired(e => e.Material)
+                .HasForeignKey(e => e.OrderId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Material>()
+                .HasMany(e => e.PhoneModel)
+                .WithMany(e => e.Material)
+                .Map(m => m.ToTable("AvailableMaterialsForModel").MapLeftKey("MaterialId").MapRightKey("ModelId"));
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.Status)
@@ -136,8 +138,9 @@ namespace AppleRepair.Data
                 .IsUnicode(false);
 
             modelBuilder.Entity<Supplier>()
-                .HasOptional(e => e.Delivery)
-                .WithRequired(e => e.Supplier);
+                .HasMany(e => e.Delivery)
+                .WithRequired(e => e.Supplier)
+                .WillCascadeOnDelete(false);
         }
     }
 }

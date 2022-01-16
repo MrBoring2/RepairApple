@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\user30\GIT\RepairApple\AppleRepair\obj\Debug\
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\
 AppleRepair
 none
 false
 DEBUG;TRACE
-C:\Users\user30\GIT\RepairApple\AppleRepair\App.xaml
-1-1216218189
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\App.xaml
+7-1729099166
 
-18-28776486
-21-1907692665
-Views\LoginWindow.xaml;
+251163091775
+2610759070
+Resources\Styles\ListViewStyle.xaml;Resources\Styles\WindowStyle.xaml;Views\Pages\MaterialsListPage.xaml;Views\Pages\ModelsListPage.xaml;Views\Pages\OrdersListPage.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainAppWindow.xaml;
 
 False
 

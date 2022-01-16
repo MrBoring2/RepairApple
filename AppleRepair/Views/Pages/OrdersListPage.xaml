@@ -1,0 +1,51 @@
+﻿<local:BasePage x:Class="AppleRepair.Views.Pages.OrdersListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AppleRepair.Views.Pages"
+      mc:Ignorable="d" 
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{DynamicResource MaterialDesignPaper}"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="600" d:DesignWidth="1100"
+      Title="OrderPage" >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="323*"/>
+            <RowDefinition Height="67*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="230*"/>
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите номер заказа или ФИО клиента для поиска..." FontSize="16" Grid.ColumnSpan="3" Height="30"/>
+            <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10">
+                <TextBlock Text="Модель телефона" FontSize="14" TextAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Models}"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10" Grid.Column="3">
+                <TextBlock Text="Сортировка" FontSize="14" TextAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding SortParams}"/>
+            </StackPanel>
+        </Grid>
+        <DataGrid Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер заказа" Width="*"/>
+                <DataGridTextColumn Header="Клиент" Width="*"/>
+                <DataGridTextColumn Header="Модель телефона" Width="*"/>
+                <DataGridTextColumn Header="Начала заказа" Width="*"/>
+                <DataGridTextColumn Header="Окончание заказа" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+
+        </Grid>
+
+
+    </Grid>
+</local:BasePage>

@@ -19,7 +19,7 @@ namespace AppleRepair.Data
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MaterialId { get; set; }
 
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
         public virtual Material Material { get; set; }
 

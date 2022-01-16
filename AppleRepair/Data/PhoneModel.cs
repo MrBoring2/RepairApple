@@ -13,6 +13,7 @@ namespace AppleRepair.Data
         public PhoneModel()
         {
             Order = new HashSet<Order>();
+            Material = new HashSet<Material>();
         }
 
         public int Id { get; set; }
@@ -27,5 +28,8 @@ namespace AppleRepair.Data
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Material> Material { get; set; }
     }
 }

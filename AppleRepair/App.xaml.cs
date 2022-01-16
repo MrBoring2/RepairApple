@@ -1,4 +1,5 @@
 ﻿using AppleRepair.Views;
+using AppleRepair.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
