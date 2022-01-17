@@ -165,6 +165,7 @@ namespace AppleRepair.Views.Windows
         {
             var model = (((sender as PackIcon).Parent) as Grid).DataContext as string;
             SelectedModels.Remove(model);
+            FormatName();
         }
     }
 }
