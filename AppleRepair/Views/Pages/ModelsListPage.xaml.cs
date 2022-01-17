@@ -1,5 +1,6 @@
 ﻿using AppleRepair.Data;
 using AppleRepair.Models;
+using AppleRepair.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,12 +33,8 @@ namespace AppleRepair.Views.Pages
         private ObservableCollection<PhoneModel> displayedModels;
         private PhoneModel selectedModel;
         public ModelsListPage()
-        {
-           
-
+        {         
             InitializeFields();
-
-
         }
         public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshModels(); OnPropertyChanged(); } }
         public SortParam SelectedSort { get => selectedSort; set { selectedSort = value; RefreshModels(); OnPropertyChanged(); } }
@@ -96,7 +93,7 @@ namespace AppleRepair.Views.Pages
         {
             using (var db = new AppleRepairContext())
             {
-                Models = new List<PhoneModel>(db.PhoneModel);
+                Models = new List<PhoneModel>(db.PhoneModel.Include("Color"));
             }
         }
 
@@ -106,11 +103,10 @@ namespace AppleRepair.Views.Pages
             {
                 Colors = new List<string>();
                 Colors.Add("Все");
-                foreach (var item in db.PhoneModel)
+                foreach (var item in db.Color)
                 {
-                    Colors.Add(item.Color);
+                    Colors.Add(item.Name);
                 }
-                Colors = Colors.Distinct().ToList();
                 selectedColor = Colors.FirstOrDefault();
             }
         }
@@ -137,7 +133,7 @@ namespace AppleRepair.Views.Pages
             list = list
               .Where(p => p.ModelName.ToLower().Contains(Search.ToLower())).ToList();
 
-            list = list.Where(p => SelectedColor != "Все" ? p.Color.Equals(SelectedColor) : p.Color.Contains("")).ToList();
+            list = list.Where(p => SelectedColor != "Все" ? p.Color.Name.Equals(SelectedColor) : p.Color.Name.Contains("")).ToList();
 
             list = list.Skip(currentPage * ItemsPerPage).Take(ItemsPerPage).ToList();
 
@@ -163,7 +159,7 @@ namespace AppleRepair.Views.Pages
                          .Where(p => p.ModelName.ToLower().Contains(Search.ToLower())).ToList();
 
                 //Фильтруем список клиентов по полу
-                list = list.Where(p => SelectedColor != "Все" ? p.Color.Equals(SelectedColor) : p.Color.Contains("")).ToList();
+                list = list.Where(p => SelectedColor != "Все" ? p.Color.Name.Equals(SelectedColor) : p.Color.Name.Contains("")).ToList();
 
                 return (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) > 0 ? (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) : 1;
             }
@@ -197,6 +193,16 @@ namespace AppleRepair.Views.Pages
         private void ToLast_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage = MaxPage - 1;
+        }
+
+
+        private void AddModel_Click(object sender, RoutedEventArgs e)
+        {
+            var modelWindow = new ModelWindow();
+            if(modelWindow.ShowDialog() == true)
+            {
+                LoadModels();
+            }
         }
     }
 }

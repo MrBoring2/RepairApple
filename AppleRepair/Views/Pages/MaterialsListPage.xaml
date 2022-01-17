@@ -66,7 +66,7 @@
                 <Button Foreground="White" x:Name="ToLast" Content="»" Width="50" FontSize="20" Click="ToLast_Click"/>
             </StackPanel>
         </Grid>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="998,0,0,0" Grid.Row="2" VerticalAlignment="Center" Cursor="Hand" Click="Button_Click"/>
+        <Button Content="Добавить материал" Width="200" Foreground="White" Margin="5,15,5,5" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Cursor="Hand" Click="Button_Click"/>
 
 
     </Grid>

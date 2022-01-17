@@ -1,5 +1,4 @@
 ﻿using AppleRepair.Data;
-using AppleRepair.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,42 +12,40 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AppleRepair.Views.Pages
+namespace AppleRepair.Views.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для OrderPage.xaml
+    /// Логика взаимодействия для ClientsListWindow.xaml
     /// </summary>
-    public partial class OrdersListPage : BasePage
+    public partial class ClientsListWindow : BaseWindow
     {
         private int itemsPerPage;
         private string search;
-        private bool isAcsending;
         private int currentPage;
-        private ObservableCollection<Order> displayedOrders;
-        private Order selectedOrder;
-        public OrdersListPage()
-        {
+        private ObservableCollection<Client> displayedClients;
+        private Client selectedClient;
+        public ClientsListWindow()
+        {          
             InitializeFields();
+            InitializeComponent();
+            DataContext = this;
         }
         private async void InitializeFields()
         {
             ItemsPerPage = 20;
             search = String.Empty;
 
-       
-            await Task.Run(LoadOrders);
-            InitializeComponent();
-            DataContext = this;
+            await Task.Run(LoadClients);
+
             //await Task.Run(LoadColors);
 
         }
-        public Order SelectedOrder { get { return selectedOrder; } set { selectedOrder = value; OnPropertyChanged(); } }
-        public List<Order> Orders { get; set; }
-        public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
-        public ObservableCollection<Order> DisplayedOrders { get => displayedOrders; set { displayedOrders = value; OnPropertyChanged(); } }
+        public Client SelectedClient { get { return selectedClient; } set { selectedClient = value; OnPropertyChanged(); } }
+        public List<Client> Clients { get; set; }
+       // public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
+        public ObservableCollection<Client> DisplayedClients { get => displayedClients; set { displayedClients = value; OnPropertyChanged(); } }
         public string DisplayedPages
         {
             get => $"{CurrentPage + 1}/{MaxPage}";
@@ -60,7 +57,7 @@ namespace AppleRepair.Views.Pages
             {
                 search = value;
                 OnPropertyChanged();
-                RefreshOrders();
+                RefreshClients();
             }
         }
         public int CurrentPage
@@ -71,7 +68,7 @@ namespace AppleRepair.Views.Pages
 
                 currentPage = value;
                 OnPropertyChanged();
-                RefreshMaterials();
+                RefreshClients();
             }
         }
         public int ItemsPerPage
@@ -79,28 +76,20 @@ namespace AppleRepair.Views.Pages
             get { return itemsPerPage; }
             set { itemsPerPage = value; OnPropertyChanged(); }
         }
-        private async void LoadOrders()
+        private async void LoadClients()
         {
             using (var db = new AppleRepairContext())
             {
-                Orders = new List<Order>(db.Order.Include("Client").Include("PhoneModel"));
-                DisplayedOrders = new ObservableCollection<Order>(Orders);
+                await Task.Run(() => Clients = new List<Client>(db.Client));
+                //DisplayedClients = new ObservableCollection<Client>(Clients);
 
-                IsAcsending = true;
-                await Task.Run(() => RefreshOrders());
+               // IsAcsending = true;
+                await Task.Run(() => RefreshClients());
+                
 
             }
         }
 
-        private async void RefreshOrders()
-        {
-            await Task.Run(() =>
-            {
-                var list = Orders.ToList();
-
-                DisplayedOrders = new ObservableCollection<Order>(list);
-            });
-        }
         private List<Material> SortMaterials()
         {
             //if (IsAcsending)
@@ -113,7 +102,7 @@ namespace AppleRepair.Views.Pages
             //}
             return null;
         }
-        private void RefreshMaterials()
+        private void RefreshClients()
         {
             if (CurrentPage > MaxPage - 1)
             {
@@ -121,16 +110,16 @@ namespace AppleRepair.Views.Pages
             }
 
 
-            var list = Orders; // SortMaterials();
+            var list = Clients; // SortMaterials();
 
             list = list
-              .Where(p => p.Id.ToString().Contains(Search.ToLower()) || p.Client.FullName.ToLower().Contains(Search.ToLower())).ToList();
+              .Where(p => p.Email.ToString().Contains(Search.ToLower()) || p.FullName.ToLower().Contains(Search.ToLower()) || p.PhoneNumber.Contains(Search.ToLower())).ToList();
 
-           // list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
+            // list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
 
             list = list.Skip(currentPage * ItemsPerPage).Take(ItemsPerPage).ToList();
 
-            DisplayedOrders = new ObservableCollection<Order>(list);
+            DisplayedClients = new ObservableCollection<Client>(list);
 
             OnPropertyChanged(nameof(DisplayedPages));
 
@@ -149,8 +138,8 @@ namespace AppleRepair.Views.Pages
             get
             {
                 //Фильтруем наш список по поисковой строке
-                var list = Orders
-                         .Where(p => p.Id.ToString().Contains(Search.ToLower()) || p.Client.FullName.ToLower().Contains(Search.ToLower())).ToList();
+                var list = Clients
+                    .Where(p => p.Email.ToString().Contains(Search.ToLower()) || p.FullName.ToLower().Contains(Search.ToLower()) || p.PhoneNumber.Contains(Search.ToLower())).ToList();
 
                 //Фильтруем список клиентов по полу
                 //list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
@@ -171,15 +160,15 @@ namespace AppleRepair.Views.Pages
 
         private async void BasePage_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Run(() => LoadOrders());
+            await Task.Run(() => LoadClients());
         }
 
         private void AddOrder_Click(object sender, RoutedEventArgs e)
         {
             var orderWindow = new OrderWindow();
-            if(orderWindow.ShowDialog() == true)
+            if (orderWindow.ShowDialog() == true)
             {
-                LoadOrders();
+
             }
         }
 
@@ -204,5 +193,16 @@ namespace AppleRepair.Views.Pages
                 CurrentPage++;
             }
         }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
     }
 }
+

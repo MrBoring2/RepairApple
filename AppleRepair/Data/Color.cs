@@ -6,30 +6,22 @@ namespace AppleRepair.Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("PhoneModel")]
-    public partial class PhoneModel : BaseEntity
+    [Table("Color")]
+    public partial class Color
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PhoneModel()
+        public Color()
         {
-            Order = new HashSet<Order>();
-            Material = new HashSet<Material>();
+            PhoneModel = new HashSet<PhoneModel>();
         }
 
         public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string ModelName { get; set; }
-
-        public int ColorId { get; set; }
-
-        public virtual Color Color { get; set; }
+        public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Material> Material { get; set; }
+        public virtual ICollection<PhoneModel> PhoneModel { get; set; }
     }
 }

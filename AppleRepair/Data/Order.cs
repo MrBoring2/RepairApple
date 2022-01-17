@@ -7,7 +7,7 @@ namespace AppleRepair.Data
     using System.Data.Entity.Spatial;
 
     [Table("Order")]
-    public partial class Order
+    public partial class Order : BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
@@ -29,7 +29,7 @@ namespace AppleRepair.Data
         public DateTime EndDate { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Status { get; set; }
 
         public double Price { get; set; }

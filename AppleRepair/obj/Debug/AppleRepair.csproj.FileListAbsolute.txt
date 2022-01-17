@@ -99,7 +99,6 @@ C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Resources\Styles\ListVie
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\ModelsListPage.g.cs
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\ModelsListPage.baml
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Resources\Styles\MainControlsTemplates.baml
-C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\bin\Debug\AppleRepair.exe.config
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\bin\Debug\AppleRepair.exe
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\bin\Debug\AppleRepair.pdb
@@ -161,3 +160,11 @@ C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\AppleRepair.exe
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\AppleRepair.pdb
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\PhoneMaterialWindow.g.cs
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\PhoneMaterialWindow.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\PhoneMaterialWindow.g.cs
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\PhoneMaterialWindow.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\OrderWindow.g.cs
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\OrderWindow.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsListWindow.g.cs
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsListWindow.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.g.cs
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.baml

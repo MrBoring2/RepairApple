@@ -7,43 +7,65 @@
         mc:Ignorable="d"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="MaterialWindow" Height="580" Width="1000">
+        Title="APPLE СЕРВИС | Добавление материала" Height="580" Width="1000">
     <Grid>
-        <Border Margin="20" CornerRadius="30" BorderBrush="#9E9E9E" BorderThickness="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Margin="20,20,20,20" CornerRadius="30" BorderBrush="#9E9E9E" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="276*"/>
                     <ColumnDefinition Width="203*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-
-                </Grid>
+                <StackPanel Grid.Column="0">
+                    <TextBlock FontSize="14" Text="Название" Margin="15,25,15,0"/>
+                    <TextBox IsReadOnly="True" Text="{Binding MaterialName}" FontSize="16" Margin="15,0,15,15" VerticalAlignment="Top" Cursor="IBeam"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="191*"/>
+                            <ColumnDefinition Width="85*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.ColumnSpan="1">
+                            <TextBlock FontSize="14" Text="Цена" Margin="15,5,15,0"/>
+                            <TextBox Text="{Binding Price}" Margin="15,0,10,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock FontSize="14" Text="Количество" HorizontalAlignment="Center"/>
+                            <mde:OversizedNumberSpinner Height="60" FontSize="14" Foreground="White" HorizontalAlignment="Center" Width="40" Max="400" Min="1" Value="{Binding Amount, Mode=TwoWay}" Margin="5"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel>
+                        <TextBlock FontSize="14" Text="Характеристики" Margin="15,0,15,0"/>
+                        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="15,0,15,0"/>
+                    </StackPanel>
+                </StackPanel>
                 <Grid Grid.Column="1" Background="Transparent">
 
-                    <materialDesign:Card UniformCornerRadius="20" Margin="10" Background="#FFF3F3F5" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="All">
+                    <materialDesign:Card UniformCornerRadius="20" Margin="15" Background="#FFF9F9F9" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="All">
+                        <ScrollViewer>
+                            <StackPanel>
+                                <TextBlock FontSize="14" Text="Тип материала" Margin="10,10,10,0"/>
+                                <ComboBox Margin="10,0,10,10" ItemsSource="{Binding MaterialTypes}" FontSize="16" SelectedItem="{Binding SelectedMaterialType}" DisplayMemberPath="Name"/>
+                                <TextBlock FontSize="14" Text="Модель телефона" Margin="10,10,10,0"/>
+                                <ComboBox materialDesign:HintAssist.Hint="Выберите модель" Margin="10,0,10,10" ItemsSource="{Binding Models}" FontSize="16" SelectedItem="{Binding SelectedModel}"/>
 
-                        <StackPanel>
-                            <TextBlock Text="Тип материала" Margin="10,10,10,0"/>
-                            <ComboBox Margin="10,0,10,10" ItemsSource="{Binding MaterialTypes}" FontSize="16" SelectedItem="{Binding SelectedMaterialType}" DisplayMemberPath="Name"/>
-                            <TextBlock Text="Модель телефона" Margin="10,10,10,0"/>
-                            <ComboBox materialDesign:HintAssist.Hint="Выберите модель" Margin="10,0,10,10" ItemsSource="{Binding Models}" FontSize="16" SelectedItem="{Binding SelectedModel}" DisplayMemberPath="Name"/>
-                            <ListView Margin="10" ItemsSource="{Binding SelectedModels}" SelectedItem="{Binding SelectedMaterial}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type ListViewItem}">
-                                        <Grid>
-                                            <TextBlock Text="{Binding ModelName}"/>
-                                            <TextBlock Text="{Binding Color}" HorizontalAlignment="Center"/>
-                                            <materialDesign:PackIcon Kind="Close" Foreground="#EF5350" Width="30" Height="30"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </StackPanel>
 
+                                <ListView  Margin="10" ItemContainerStyle="{StaticResource MaterialDesignNavigationListBoxItem}" ItemsSource="{Binding SelectedModels}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SelectedModelInList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type ListViewItem}">
+                                            <Grid>
+                                                <TextBlock Text="{Binding}"/>
+                                                <materialDesign:PackIcon Kind="Close" Foreground="#EF5350" Background="Transparent" Width="30" Height="30" HorizontalAlignment="Right" MouseDown="PackIcon_MouseDown"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
                     </materialDesign:Card>
-
                 </Grid>
-
+                <Button Content="Сохранить" VerticalAlignment="Bottom" Margin="15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Button_Click"/>
             </Grid>
         </Border>
     </Grid>

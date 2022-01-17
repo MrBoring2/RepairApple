@@ -40,17 +40,18 @@
         <DataGrid CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding DisplayedModels}" SelectedItem="{Binding SelectedModel}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="2*" Binding="{Binding ModelName}"/>
-                <DataGridTextColumn Header="Цвет" Width="*" Binding="{Binding Color}"/>
+                <DataGridTextColumn Header="Цвет" Width="*" Binding="{Binding Color.Name}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Height="40" Orientation="Horizontal">
-                <Button Foreground="White" x:Name="ToFirst" Content="«" Width="50" FontSize="20" Click="ToFirst_Click"/>
+                <Button Foreground="White" x:Name="ToFirst" Content="«" Width="50" FontSize="20" Click="ToFirst_Click" Cursor="Hand"/>
                 <Button Foreground="White" x:Name="Back" Content="←" Width="50" FontSize="20" Margin="5,0,0,0" Click="Back_Click"/>
                 <TextBlock Width="50" Height="25" FontSize="16" Margin="5,0,5,0" Text="{Binding DisplayedPages}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
                 <Button Foreground="White" x:Name="Forward" Content="→" Width="50" FontSize="20" Margin="0,0,5,0" Click="Forward_Click"/>
                 <Button Foreground="White" x:Name="ToLast" Content="»" Width="50" FontSize="20" Click="ToLast_Click"/>
             </StackPanel>
+            <Button x:Name="AddModel" Width="150" Foreground="White" Content="Добавить модель" HorizontalAlignment="Right" Margin="15,0,15,10" VerticalAlignment="Bottom" Click="AddModel_Click"/>
         </Grid>
 
 

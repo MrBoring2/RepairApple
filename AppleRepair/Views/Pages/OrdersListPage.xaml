@@ -33,34 +33,29 @@
                 <ComboBox ItemsSource="{Binding SortParams}" SelectedItem="{Binding SelectedSort}"/>
             </StackPanel>
         </Grid>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding DisplayedOrders}">
+        <DataGrid IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Grid.Row="1" ItemsSource="{Binding DisplayedOrders}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Номер заказа" Width="*"/>
-                <DataGridTextColumn Header="Клиент" Width="*"/>
-                <DataGridTextColumn Header="Модель телефона" Width="*"/>
-                <DataGridTextColumn Header="Начала заказа" Width="*"/>
-                <DataGridTextColumn Header="Окончание заказа" Width="*"/>
+                <DataGridTextColumn Header="Номер заказа" Width="*" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Клиент" Width="*" Binding="{Binding Client.FullName}"/>
+                <DataGridTextColumn Header="Модель телефона" Width="*" Binding="{Binding PhoneModel.ModelName}"/>
+                <DataGridTextColumn Header="Начала заказа" Width="*" Binding="{Binding StartDate, StringFormat={}{0:dd.MM.yyy HH:mm:ss}}"/>
+                <DataGridTextColumn Header="Окончание заказа" Width="*" Binding="{Binding EndDate, StringFormat={}{0:dd.MM.yyy HH:mm:ss}}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
-            <StackPanel Orientation="Horizontal" Name="PaginatorPanel" HorizontalAlignment="Center"  Grid.Row="1" Grid.RowSpan="1">
-                <Button x:Name="ToFirst"  Click="ToFirst_Click" Content="«" Margin="0,7.5,0,7.5" Foreground="White" Height="35" Width="50" FontSize="20" Cursor="Hand"/>
-                <ListView Margin="5,7.5" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource paginator}" SelectedItem="{Binding Paginator.SelectedPageNumber}" x:Name="PagesList" HorizontalAlignment="Stretch" Height="Auto" ItemsSource="{Binding Paginator.DisplayedPagesNumbers}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" Height="20" Width="45" FontSize="18" TextAlignment="Center"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                </ListView>
-                <Button x:Name="ToLast" TextBlock.TextAlignment="Center" Foreground="White" Click="ToLast_Click" Content="»" Margin="0" Height="35" Width="50" FontSize="20" />
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Height="40" Orientation="Horizontal">
+                <Button Foreground="White" x:Name="ToFirst" Content="«" Width="50" FontSize="20" Click="ToFirst_Click" Cursor="Hand"/>
+                <Button Foreground="White" x:Name="Back" Content="←" Width="50" FontSize="20" Margin="5,0,0,0" Click="Back_Click" Cursor="Hand"/>
+                <TextBlock Width="50" Height="25" FontSize="16" Margin="5,0,5,0" Text="{Binding DisplayedPages}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                <Button Foreground="White" x:Name="Forward" Content="→" Width="50" FontSize="20" Margin="0,0,5,0" Click="Forward_Click"/>
+                <Button Foreground="White" x:Name="ToLast" Content="»" Width="50" FontSize="20" Click="ToLast_Click"/>
             </StackPanel>
-        </Grid>
 
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,20,5,5">
+            <Button x:Name="AddOrder" Foreground="White" Content="Добавить заказ" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,5,0" Width="150" Click="AddOrder_Click" Cursor="Hand"/>
+            <Button x:Name="FinishOrder" Foreground="White" Content="Завершить заказ" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Click="FinishOrder_Click"/>
+        </StackPanel>
 
     </Grid>
 </local:BasePage>

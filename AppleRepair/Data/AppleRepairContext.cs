@@ -8,11 +8,12 @@ namespace AppleRepair.Data
     public partial class AppleRepairContext : DbContext
     {
         public AppleRepairContext()
-            : base("name=AppleRepairContext")
+            : base("name=AppleRepairContextHome")
         {
         }
 
         public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<Color> Color { get; set; }
         public virtual DbSet<Delivery> Delivery { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Material> Material { get; set; }
@@ -42,6 +43,15 @@ namespace AppleRepair.Data
             modelBuilder.Entity<Client>()
                 .HasMany(e => e.Order)
                 .WithRequired(e => e.Client)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Color>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Color>()
+                .HasMany(e => e.PhoneModel)
+                .WithRequired(e => e.Color)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Delivery>()
@@ -94,6 +104,11 @@ namespace AppleRepair.Data
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<MaterialType>()
+                .HasMany(e => e.Material)
+                .WithRequired(e => e.MaterialType)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Order>()
                 .Property(e => e.Status)
                 .IsUnicode(false);
@@ -114,10 +129,6 @@ namespace AppleRepair.Data
 
             modelBuilder.Entity<PhoneModel>()
                 .Property(e => e.ModelName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<PhoneModel>()
-                .Property(e => e.Color)
                 .IsUnicode(false);
 
             modelBuilder.Entity<PhoneModel>()

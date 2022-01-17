@@ -27,7 +27,9 @@ namespace AppleRepair.Data
 
         public int Amount { get; set; }
 
-        public int? MaterialTypeId { get; set; }
+        public int MaterialTypeId { get; set; }
+
+        public bool IsActive { get; set; }
 
         public virtual MaterialType MaterialType { get; set; }
 

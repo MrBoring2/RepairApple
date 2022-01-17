@@ -42,6 +42,7 @@ namespace AppleRepair.Views.Pages
 
 
         }
+
         public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
         public SortParam SelectedSort { get => selectedSort; set { selectedSort = value; RefreshMaterials(); OnPropertyChanged(); } }
         public string SelectedMaterialType { get { return selectedMaterialType; } set { selectedMaterialType = value; RefreshMaterials(); OnPropertyChanged(); } }
@@ -189,6 +190,7 @@ namespace AppleRepair.Views.Pages
             //else EmptyVisibility = Visibility.Hidden;
 
         }
+      
         private int MaxPage
         {
             get
@@ -207,6 +209,7 @@ namespace AppleRepair.Views.Pages
         {
 
         }
+
 
         private void ToFirst_Click(object sender, RoutedEventArgs e)
         {
@@ -247,7 +250,7 @@ namespace AppleRepair.Views.Pages
             var materilaWindow = new PhoneMaterialWindow();
             if(materilaWindow.ShowDialog() == true)
             {
-
+                LoadMaterials();
             }
         }
     }
