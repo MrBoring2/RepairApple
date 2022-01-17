@@ -1,6 +1,8 @@
 ﻿using AppleRepair.Data;
 using AppleRepair.Models;
 using AppleRepair.Services;
+using AppleRepair.Views.Windows;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,8 +36,7 @@ namespace AppleRepair.Views.Pages
         private Material selectedMaterial;
         public MaterialsListPage()
         {
-            InitializeComponent();
-            DataContext = this;
+
 
             InitializeFields();
 
@@ -91,25 +92,25 @@ namespace AppleRepair.Views.Pages
             get => currentPage;
             set
             {
-                if (value <= 0)
-                    currentPage = 1;
-                else
-                    currentPage = value;
+
+                currentPage = value;
                 OnPropertyChanged();
                 RefreshMaterials();
             }
         }
-        private void InitializeFields()
+        private async void InitializeFields()
         {
             ItemsPerPage = 20;
             search = String.Empty;
 
-            LoadMaterials();
+            await Task.Run(LoadMaterials);
 
-            LoadTypes();
-            LoadSort();
+            await Task.Run(LoadTypes);
+            await Task.Run(LoadSort);
 
             IsAcsending = true;
+            InitializeComponent();
+            DataContext = this;
         }
 
         private void LoadSort()
@@ -124,14 +125,17 @@ namespace AppleRepair.Views.Pages
 
         private void LoadMaterials()
         {
+
             using (var db = new AppleRepairContext())
             {
                 Materials = new List<Material>(db.Material.Include("MaterialType"));
             }
+
         }
 
         private void LoadTypes()
         {
+
             using (var db = new AppleRepairContext())
             {
                 MaterialTypes = new List<string>();
@@ -142,6 +146,7 @@ namespace AppleRepair.Views.Pages
                 }
                 selectedMaterialType = MaterialTypes.FirstOrDefault();
             }
+
         }
         private List<Material> SortMaterials()
         {
@@ -160,6 +165,7 @@ namespace AppleRepair.Views.Pages
             {
                 currentPage = MaxPage - 1;
             }
+
 
             var list = SortMaterials();
 
@@ -226,6 +232,23 @@ namespace AppleRepair.Views.Pages
         private void ToLast_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage = MaxPage - 1;
+        }
+
+        private void edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = ((icon.Parent as StackPanel).Parent as Grid);
+            var d = par.DataContext as Material;
+            MessageBox.Show(d.Name);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var materilaWindow = new PhoneMaterialWindow();
+            if(materilaWindow.ShowDialog() == true)
+            {
+
+            }
         }
     }
 }

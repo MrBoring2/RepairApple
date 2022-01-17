@@ -26,11 +26,11 @@
             <TextBlock Text="Авторизация" Foreground="DimGray" FontSize="20" HorizontalAlignment="Center" Margin="0,20"/>
             <Grid Margin="0,5,0,0">
                 <materialDesign:PackIcon Foreground="#29B6F6" Kind="AccountOutline" Margin="5" Width="30" Height="30"/>
-                <TextBox Margin="40,5,10,0" TextWrapping="Wrap" Text="{Binding Login}" materialDesign:HintAssist.Hint="Логин" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="IBeam"/>
+                <TextBox Margin="40,5,10,0" TextWrapping="Wrap" Text="{Binding Login}" materialDesign:HintAssist.Hint="Логин" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="IBeam" FontStyle="Italic"/>
             </Grid>
             <Grid>
                 <materialDesign:PackIcon Foreground="#29B6F6" Kind="PasswordOutline" Margin="5" Width="30" Height="30"/>
-                <TextBox Margin="40,5,10,0" TextWrapping="Wrap" Text="{Binding Password}" materialDesign:HintAssist.Hint="Пароль" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="IBeam"/>
+                <TextBox Margin="40,5,10,0" TextWrapping="Wrap" Text="{Binding Password}" materialDesign:HintAssist.Hint="Пароль" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="IBeam" FontStyle="Italic"/>
             </Grid>
         </StackPanel>
 

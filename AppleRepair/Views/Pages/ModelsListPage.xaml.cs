@@ -33,8 +33,7 @@ namespace AppleRepair.Views.Pages
         private PhoneModel selectedModel;
         public ModelsListPage()
         {
-            InitializeComponent();
-            DataContext = this;
+           
 
             InitializeFields();
 
@@ -73,24 +72,24 @@ namespace AppleRepair.Views.Pages
             get => currentPage;
             set
             {
-                if (value <= 0)
-                    currentPage = 1;
-                else
+              
                     currentPage = value;
                 OnPropertyChanged();
                 RefreshModels();
             }
         }
-        private void InitializeFields()
+        private async void InitializeFields()
         {
             ItemsPerPage = 20;
             search = String.Empty;
 
-            LoadModels();
+            await Task.Run(LoadModels);
 
-            LoadColors();
+            await Task.Run(LoadColors);
 
             IsAcsending = true;
+            InitializeComponent();
+            DataContext = this;
         }
 
         private void LoadModels()

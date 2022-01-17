@@ -107,6 +107,7 @@
     <Compile Include="Data\Supplier.cs" />
     <Compile Include="Models\ItemMenu.cs" />
     <Compile Include="Models\SortParam.cs" />
+    <Compile Include="Services\OperatingSystemsSearchSuggestionsSource.cs" />
     <Compile Include="Services\Paginator.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Views\Pages\BasePage.cs" />
@@ -125,6 +126,9 @@
     </Compile>
     <Compile Include="Views\Windows\MainAppWindow.xaml.cs">
       <DependentUpon>MainAppWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\PhoneMaterialWindow.xaml.cs">
+      <DependentUpon>PhoneMaterialWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +191,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\PhoneMaterialWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\apple_background.png" />
@@ -205,6 +213,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\administrator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Polygon 1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" />
