@@ -5,6 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         mc:Ignorable="d"
+                 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+                  
+        FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="APPLE СЕРВИС | Список клиентов" Height="650" Width="800" Icon="/Resources/Images/icon.ico" RenderOptions.BitmapScalingMode="HighQuality">
     <Grid>
@@ -21,7 +25,7 @@
                 <ColumnDefinition Width="230*"/>
                 <ColumnDefinition Width="100*"/>
             </Grid.ColumnDefinitions>
-            <TextBox VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите ФИО, email или номер телефона клиента для поиска..." FontSize="16" Grid.ColumnSpan="3" Height="30"/>
+            <TextBox VerticalAlignment="Top" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите ФИО, email или номер телефона клиента для поиска..." FontSize="16" Grid.ColumnSpan="3" Height="30" Cursor="IBeam"/>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10"/>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10" Grid.Column="3"/>
         </Grid>

@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
+                  
+        FontFamily="{materialDesign:MaterialDesignFont}"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         TextElement.FontSize="20"
-        FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
         BorderBackgroundBrush="#2196F3"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"

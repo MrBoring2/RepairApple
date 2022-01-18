@@ -5,6 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         mc:Ignorable="d"
+                  TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+                  
+        FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="APPLE СЕРВИС | Добавление модели" Height="450" Width="383" Icon="/Resources/Images/icon.ico" RenderOptions.BitmapScalingMode="HighQuality">

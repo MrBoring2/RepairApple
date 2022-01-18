@@ -6,11 +6,24 @@
       xmlns:local="clr-namespace:AppleRepair.Views.Pages"
       mc:Ignorable="d" 
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-      Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource MaterialDesignPaper}"
+                  
+        FontFamily="{materialDesign:MaterialDesignFont}"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="900" d:DesignWidth="1100" Loaded="BasePage_Loaded"
       Title="OrderPage" >
-
+    <local:BasePage.Resources>
+        <DataTemplate x:Key="ContextMenuTemplate">
+            <Grid>
+                <TextBlock Text="{Binding Status}" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon x:Name="check" Kind="Check" Foreground="#43A047" ToolTip="Завершить заказ" Background="Transparent" MouseDown="check_MouseDown" Width="25" VerticalAlignment="Center" Height="25" Margin="5,0,5,0"/>
+                    <materialDesign:PackIcon x:Name="cancel" Kind="Cancel" Foreground="#EF5350" Background="Transparent" ToolTip="Отменить заказ" MouseDown="cancel_MouseDown" Width="25" VerticalAlignment="Center" Height="25" Margin="5,0,5,0"/>
+                    <materialDesign:PackIcon x:Name="restore" Kind="Restore" Foreground="#F57F17" Background="Transparent" ToolTip="Восстановить заказ" MouseDown="restore_MouseDown" Width="25" VerticalAlignment="Center" Height="25" Margin="5,0,5,0"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </local:BasePage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -20,26 +33,42 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="230*"/>
+                <ColumnDefinition Width="100*"/>
                 <ColumnDefinition Width="100*"/>
             </Grid.ColumnDefinitions>
-            <TextBox VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите номер заказа или ФИО клиента для поиска..." FontSize="16" Grid.ColumnSpan="3" Height="30"/>
+            <TextBox VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите номер заказа или ФИО клиента для поиска..." Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Grid.ColumnSpan="2" Height="30" Cursor="IBeam"/>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10">
                 <TextBlock Text="Модель телефона" FontSize="14" TextAlignment="Center"/>
                 <ComboBox ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel}"/>
             </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Grid.Column="1" Margin="5,5,5,10">
+                <TextBlock Text="Статус заказа" FontSize="14" TextAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Statuses}" SelectedItem="{Binding SelectedStatus}"/>
+            </StackPanel>
             <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10" Grid.Column="3">
                 <TextBlock Text="Сортировка" FontSize="14" TextAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding SortParams}" SelectedItem="{Binding SelectedSort}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <TextBlock Margin="5,0,10,0" Text="По возрастанию" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <CheckBox IsChecked="{Binding IsAcsending}" HorizontalAlignment="Right"/>
+                </StackPanel>
             </StackPanel>
+
+           
         </Grid>
-        <DataGrid IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Grid.Row="1" ItemsSource="{Binding DisplayedOrders}">
+        <Button x:Name="addNewOrder" Grid.Row="1" RenderOptions.BitmapScalingMode="HighQuality" ToolTip="Добавить заказ" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignIconButton}" Margin="15,5" Width="30" Height="30" VerticalAlignment="Top" Cursor="Hand" Click="addNewOrder_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/Images/Vector-1.png" RenderOptions.BitmapScalingMode="HighQuality"  />
+            </Button.Background>
+        </Button>
+        <DataGrid IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Grid.Row="1" ItemsSource="{Binding DisplayedOrders}" Margin="0,40,0,0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Номер заказа" Width="*" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Клиент" Width="*" Binding="{Binding Client.FullName}"/>
+                <DataGridTextColumn Header="Номер заказа" Width="0.8*" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Клиент" Width="1.7*" Binding="{Binding Client.FullName}"/>
                 <DataGridTextColumn Header="Модель телефона" Width="*" Binding="{Binding PhoneModel.ModelName}"/>
                 <DataGridTextColumn Header="Начала заказа" Width="*" Binding="{Binding StartDate, StringFormat={}{0:dd.MM.yyy HH:mm:ss}}"/>
                 <DataGridTextColumn Header="Окончание заказа" Width="*" Binding="{Binding EndDate, StringFormat={}{0:dd.MM.yyy HH:mm:ss}}"/>
+                <DataGridTemplateColumn Header="Статус" Width="2*" CellTemplate="{StaticResource ContextMenuTemplate}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
@@ -52,10 +81,7 @@
             </StackPanel>
 
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,20,5,5">
-            <Button x:Name="AddOrder" Foreground="White" Content="Добавить заказ" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,5,0" Width="150" Click="AddOrder_Click" Cursor="Hand"/>
-            <Button x:Name="FinishOrder" Foreground="White" Content="Завершить заказ" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Click="FinishOrder_Click"/>
-        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,20,5,5"/>
 
     </Grid>
 </local:BasePage>

@@ -126,6 +126,9 @@
     <Compile Include="Views\Windows\ClientsListWindow.xaml.cs">
       <DependentUpon>ClientsListWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\FinishOrderWindow.xaml.cs">
+      <DependentUpon>FinishOrderWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -198,6 +201,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\FinishOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -240,7 +247,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Polygon 1.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\plus-circle %281%29.png" />
+    <Content Include="Resources\Images\plus-circle.svg" />
+    <Resource Include="Resources\Images\Vector-1.png" />
+    <Resource Include="Resources\Images\Vector.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -169,3 +169,13 @@ C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsLis
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.g.cs
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.baml
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsListWindow.g.cs
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.g.cs
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\OrderWindow.g.cs
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsListWindow.baml
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.baml
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\OrderWindow.baml
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\AppleRepair_Content.g.cs
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\FinishOrderWindow.g.cs
+C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\FinishOrderWindow.baml

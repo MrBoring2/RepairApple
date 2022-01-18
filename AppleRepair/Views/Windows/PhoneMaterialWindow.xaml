@@ -5,6 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         mc:Ignorable="d"
+                  TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+                  
+        FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="APPLE СЕРВИС | Добавление материала" Height="580" Width="1000">
@@ -65,7 +69,7 @@
                         </ScrollViewer>
                     </materialDesign:Card>
                 </Grid>
-                <Button Content="Сохранить" VerticalAlignment="Bottom" Margin="15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Button_Click"/>
+                <Button Content="Сохранить" VerticalAlignment="Bottom" Margin="15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Button_Click" Cursor="Hand"/>
             </Grid>
         </Border>
     </Grid>

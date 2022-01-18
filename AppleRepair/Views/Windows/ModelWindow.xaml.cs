@@ -55,7 +55,7 @@ namespace AppleRepair.Views.Windows
             }
             else
             {
-                MessageBox.Show("Назваине модели введено неверно!");
+                MessageBox.Show("Название модели введено неверно!");
                 return false;
             }
         }
@@ -71,10 +71,17 @@ namespace AppleRepair.Views.Windows
                         ColorId = SelectedColor.Id,
                         ModelName = PhoneModelName
                     };
-                    db.PhoneModel.Add(model);
-                    await db.SaveChangesAsync();
-                    MessageBox.Show("Модель успешно создана!");
-                    this.DialogResult = true;
+                    if (db.PhoneModel.Include("Color").FirstOrDefault(p => p.ModelName.Equals(model.ModelName) && p.Color.Id.Equals(model.ColorId)) == null)
+                    {
+                        db.PhoneModel.Add(model);
+                        await db.SaveChangesAsync();
+                        MessageBox.Show("Модель успешно создана!");
+                        this.DialogResult = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Данная модель уже существует!");
+                    }
                 }
             }
         }

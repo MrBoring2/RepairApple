@@ -1,5 +1,6 @@
 ﻿using AppleRepair.Data;
 using AppleRepair.Views.Windows;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,8 @@ namespace AppleRepair.Views.Pages
         private string search;
         private bool isAcsending;
         private int currentPage;
+        private string selectedModel;
+        private string selectedStatus;
         private ObservableCollection<Order> displayedOrders;
         private Order selectedOrder;
         public OrdersListPage()
@@ -38,16 +41,22 @@ namespace AppleRepair.Views.Pages
             ItemsPerPage = 20;
             search = String.Empty;
 
-       
+
             await Task.Run(LoadOrders);
+            LoadStatuses();
+            LoadModels();
             InitializeComponent();
             DataContext = this;
             //await Task.Run(LoadColors);
 
         }
+        public string SelectedStatus { get { return selectedStatus; } set { selectedStatus = value; OnPropertyChanged(); RefreshOrders(); } }
+        public string SelectedModel { get { return selectedModel; } set { selectedModel = value; OnPropertyChanged(); RefreshOrders(); } }
+        public List<string> Statuses { get; set; }
+        public List<string> Models { get; set; }
         public Order SelectedOrder { get { return selectedOrder; } set { selectedOrder = value; OnPropertyChanged(); } }
         public List<Order> Orders { get; set; }
-        public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
+        public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshOrders(); OnPropertyChanged(); } }
         public ObservableCollection<Order> DisplayedOrders { get => displayedOrders; set { displayedOrders = value; OnPropertyChanged(); } }
         public string DisplayedPages
         {
@@ -71,7 +80,7 @@ namespace AppleRepair.Views.Pages
 
                 currentPage = value;
                 OnPropertyChanged();
-                RefreshMaterials();
+                RefreshOrders();
             }
         }
         public int ItemsPerPage
@@ -88,32 +97,48 @@ namespace AppleRepair.Views.Pages
 
                 IsAcsending = true;
                 await Task.Run(() => RefreshOrders());
+            }
+        }
+        private void LoadStatuses()
+        {
+            Statuses = new List<string>
+            {
+                "Все",
+                "В процессе выполнения",
+                "Завершён",
+                "Отменён"
+            };
+            SelectedStatus = Statuses.FirstOrDefault();
 
+        }
+        private void LoadModels()
+        {
+            using (var db = new AppleRepairContext())
+            {
+                Models = new List<string>();
+                Models.Add("Все");
+                var models = db.PhoneModel.ToList();
+                foreach (var item in models)
+                {
+                    Models.Add(item.ModelName);
+                }
+                Models = Models.Distinct().ToList();
+                SelectedModel = Models.FirstOrDefault();
             }
         }
 
-        private async void RefreshOrders()
+        private List<Order> SortOrders()
         {
-            await Task.Run(() =>
+            if (IsAcsending)
             {
-                var list = Orders.ToList();
-
-                DisplayedOrders = new ObservableCollection<Order>(list);
-            });
+                return Orders.OrderBy(p => p.Id).ToList();
+            }
+            else
+            {
+                return Orders.OrderByDescending(p => p.Id).ToList();
+            }
         }
-        private List<Material> SortMaterials()
-        {
-            //if (IsAcsending)
-            //{
-            //    return Orders.OrderBy(p => p.GetValue(SelectedSort.Property)).ToList();
-            //}
-            //else
-            //{
-            //    return Materials.OrderByDescending(p => p.GetValue(SelectedSort.Property)).ToList();
-            //}
-            return null;
-        }
-        private void RefreshMaterials()
+        private void RefreshOrders()
         {
             if (CurrentPage > MaxPage - 1)
             {
@@ -121,12 +146,14 @@ namespace AppleRepair.Views.Pages
             }
 
 
-            var list = Orders; // SortMaterials();
+            var list = SortOrders();
 
             list = list
               .Where(p => p.Id.ToString().Contains(Search.ToLower()) || p.Client.FullName.ToLower().Contains(Search.ToLower())).ToList();
 
-           // list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
+            list = list.Where(p => SelectedModel != "Все" ? p.PhoneModel.ModelName.Equals(SelectedModel) : p.PhoneModel.ModelName.Contains("")).ToList();
+
+            list = list.Where(p => SelectedStatus != "Все" ? p.Status.Equals(SelectedStatus) : p.Status.Contains("")).ToList();
 
             list = list.Skip(currentPage * ItemsPerPage).Take(ItemsPerPage).ToList();
 
@@ -152,8 +179,9 @@ namespace AppleRepair.Views.Pages
                 var list = Orders
                          .Where(p => p.Id.ToString().Contains(Search.ToLower()) || p.Client.FullName.ToLower().Contains(Search.ToLower())).ToList();
 
-                //Фильтруем список клиентов по полу
-                //list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
+                list = list.Where(p => SelectedModel != "Все" ? p.PhoneModel.ModelName.Equals(SelectedModel) : p.PhoneModel.ModelName.Contains("")).ToList();
+
+                list = list.Where(p => SelectedStatus != "Все" ? p.Status.Equals(SelectedStatus) : p.Status.Contains("")).ToList();
 
                 return (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) > 0 ? (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) : 1;
             }
@@ -176,11 +204,7 @@ namespace AppleRepair.Views.Pages
 
         private void AddOrder_Click(object sender, RoutedEventArgs e)
         {
-            var orderWindow = new OrderWindow();
-            if(orderWindow.ShowDialog() == true)
-            {
-                LoadOrders();
-            }
+
         }
 
         private void FinishOrder_Click(object sender, RoutedEventArgs e)
@@ -202,6 +226,88 @@ namespace AppleRepair.Views.Pages
             if (CurrentPage < MaxPage - 1)
             {
                 CurrentPage++;
+            }
+        }
+
+
+
+        private void check_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = ((icon.Parent as StackPanel).Parent as Grid);
+            var order = par.DataContext as Order;
+            if (order != null)
+            {
+                if (order.Status == "В процессе выполнения")
+                {
+                    var finishOrderWindow = new FinishOrderWindow(order);
+                    if (finishOrderWindow.ShowDialog() == true)
+                    {
+                        LoadOrders();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Заказ уже выполнени или отменён!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+        private async void restore_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = ((icon.Parent as StackPanel).Parent as Grid);
+            var order = par.DataContext as Order;
+            using (var db = new AppleRepairContext())
+            {
+                if (order != null)
+                {
+                    if (order.Status == "Отменён")
+                    {
+                        order.Status = "В процессе выполнения";
+                        db.Entry(order).State = System.Data.Entity.EntityState.Modified;
+                        await db.SaveChangesAsync();
+                        await Task.Run(LoadOrders);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Заказ не отменён!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+            }
+
+        }
+
+        private async void cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = ((icon.Parent as StackPanel).Parent as Grid);
+            var order = par.DataContext as Order;
+            using (var db = new AppleRepairContext())
+            {
+                if (order != null)
+                {
+                    if (order.Status == "В процессе выполнения")
+                    {
+                        order.Status = "Отменён";
+                        db.Entry(order).State = System.Data.Entity.EntityState.Modified;
+                        await db.SaveChangesAsync();
+                        await Task.Run(LoadOrders);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Заказ уже отменён или выполнен!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+            }
+        }
+
+        private void addNewOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var orderWindow = new OrderWindow();
+            if (orderWindow.ShowDialog() == true)
+            {
+                LoadOrders();
             }
         }
     }
