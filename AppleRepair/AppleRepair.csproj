@@ -135,6 +135,9 @@
     <Compile Include="Views\Windows\MainAppWindow.xaml.cs">
       <DependentUpon>MainAppWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\MaterialsListWindow.xaml.cs">
+      <DependentUpon>MaterialsListWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\ModelWindow.xaml.cs">
       <DependentUpon>ModelWindow.xaml</DependentUpon>
     </Compile>
@@ -210,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\MainAppWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\MaterialsListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

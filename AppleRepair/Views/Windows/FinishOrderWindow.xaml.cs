@@ -35,5 +35,14 @@ namespace AppleRepair.Views.Windows
         {
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var materialsListWindow = new MaterialsListWindow();
+            if(materialsListWindow.ShowDialog() == true)
+            {
+
+            }
+        }
     }
 }

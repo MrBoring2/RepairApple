@@ -36,11 +36,7 @@ namespace AppleRepair.Views.Pages
         private Material selectedMaterial;
         public MaterialsListPage()
         {
-
-
             InitializeFields();
-
-
         }
 
         public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
@@ -252,6 +248,11 @@ namespace AppleRepair.Views.Pages
             {
                 LoadMaterials();
             }
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

@@ -61,7 +61,7 @@
                             <StackPanel>
 
                                 <TextBlock FontSize="16" Text="Материалы" Margin="10,10,10,0"/>
-                                <Button Content="Выбрать материал" Margin="10" Foreground="White"/>
+                                <Button Content="Выбрать материал" Margin="10" Foreground="White" Click="Button_Click_1"/>
                                 
                                 <ListView  Margin="10" ItemContainerStyle="{StaticResource MaterialDesignNavigationListBoxItem}" ItemsSource="{Binding SelectedServices}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SelectedSerivce}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <ListView.ItemTemplate>
