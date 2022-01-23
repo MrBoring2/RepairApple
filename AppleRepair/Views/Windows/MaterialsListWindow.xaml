@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         mc:Ignorable="d"
-        Title="MaterialsListWindow" Height="450" Width="800">
+        Title="APPLE СЕРВИС | Список материалов" Height="900" Width="1100" Icon="/Resources/Images/administrator.png">
     <Grid>
-        <Frame Source="{Binding MaterialsPage}" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="frame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </local:BaseWindow>

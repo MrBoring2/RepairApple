@@ -13,5 +13,31 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="listViewItemStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignTextBoxBorder}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
 
+                            <Setter Property="Background" Value="#FFB2AFAF" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Setter Property="Background" Value="LightGray"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

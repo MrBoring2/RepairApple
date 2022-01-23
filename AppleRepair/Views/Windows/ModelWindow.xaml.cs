@@ -21,20 +21,29 @@ namespace AppleRepair.Views.Windows
     /// </summary>
     public partial class ModelWindow : BaseWindow
     {
+        private bool isOperationAdd;
         private string phoneModelName;
         private Data.Color selectedColor;
-        private DateTime date;
-        private DateTime time;
-        private ObservableCollection<string> selectedServices;
-        public ModelWindow()
+        private PhoneModel currentPhoneModel;
+        public ModelWindow(bool isOperationAdd = true, PhoneModel model = null)
         {
-
             InitializeComponent();
-
             DataContext = this;
             LoadColors();
+            IsOperationAdd = isOperationAdd;
+            if (model != null)
+            {
+                currentPhoneModel = model;
+            }
+            if (!IsOperationAdd)
+            {
+                PhoneModelName = currentPhoneModel.ModelName;
+                SelectedColor = Colors.FirstOrDefault(p => p.Id == currentPhoneModel.ColorId);
+            }
+
         }
         public string PhoneModelName { get { return phoneModelName; } set { phoneModelName = value; OnPropertyChanged(); } }
+        public bool IsOperationAdd { get { return isOperationAdd; } set { isOperationAdd = value; OnPropertyChanged(); } }
         public Data.Color SelectedColor { get { return selectedColor; } set { selectedColor = value; OnPropertyChanged(); } }
         public List<Data.Color> Colors { get; set; }
 
@@ -60,27 +69,57 @@ namespace AppleRepair.Views.Windows
             }
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Save_Click(object sender, RoutedEventArgs e)
         {
+
             if (Validate())
             {
-                using (var db = new AppleRepairContext())
+                if (IsOperationAdd)
                 {
-                    var model = new PhoneModel
+                    using (var db = new AppleRepairContext())
                     {
-                        ColorId = SelectedColor.Id,
-                        ModelName = PhoneModelName
-                    };
-                    if (db.PhoneModel.Include("Color").FirstOrDefault(p => p.ModelName.Equals(model.ModelName) && p.Color.Id.Equals(model.ColorId)) == null)
-                    {
-                        db.PhoneModel.Add(model);
-                        await db.SaveChangesAsync();
-                        MessageBox.Show("Модель успешно создана!");
-                        this.DialogResult = true;
+                        var model = new PhoneModel
+                        {
+                            ColorId = SelectedColor.Id,
+                            ModelName = PhoneModelName
+                        };
+                        if (db.PhoneModel.Include("Color").FirstOrDefault(p => p.ModelName.Equals(model.ModelName) && p.Color.Id.Equals(model.ColorId)) == null)
+                        {
+                            db.PhoneModel.Add(model);
+                            await db.SaveChangesAsync();
+                            MessageBox.Show("Модель успешно создана!");
+                            this.DialogResult = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Данная модель уже существует!");
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    using (var db = new AppleRepairContext())
                     {
-                        MessageBox.Show("Данная модель уже существует!");
+                        var model = db.PhoneModel.FirstOrDefault(p => p.Id == currentPhoneModel.Id);
+                        var d = model.Id;
+                        if (db.PhoneModel.Include("Color").FirstOrDefault(p => p.ModelName.Equals(model.ModelName) && p.Color.Id.Equals(SelectedColor.Id)) == null)
+                        {
+                            model.ColorId = SelectedColor.Id;
+                            if (db.PhoneModel.FirstOrDefault(p => p.ModelName.Equals(currentPhoneModel.ModelName) && p.Color.Id == SelectedColor.Id) == null)
+                            {
+                                await db.SaveChangesAsync();
+                                MessageBox.Show("Модель успешно создана!");
+                                this.DialogResult = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Данная модель уже есть в списке!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Данная модель уже существует!");
+                        }
                     }
                 }
             }

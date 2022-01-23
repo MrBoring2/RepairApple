@@ -12,7 +12,17 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="900" d:DesignWidth="1100"
       Title="ModelsListPage">
-
+    <local:BasePage.Resources>
+        <DataTemplate x:Key="ContextMenuTemplate">
+            <Grid>
+                <TextBlock Text="{Binding Color.Name}" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon x:Name="edit" Kind="Pencil" Foreground="#43A047" Background="Transparent"  MouseDown="edit_MouseDown" Width="25" VerticalAlignment="Center" Height="25" Margin="0,0,5,0"/>
+                    <!--<materialDesign:PackIcon x:Name="remove" Kind="Close" Foreground="#EF5350" Width="25" VerticalAlignment="Center" MouseDown="remove_MouseDown" Height="25"/>-->
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </local:BasePage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -34,15 +44,20 @@
                 <TextBlock Text="Сортировка" FontSize="14" TextAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                    <TextBlock Margin="5,0,0,0" Text="По возратсанию" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock FontSize="14" Margin="5,0,0,0" Text="По возратсанию" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <CheckBox IsChecked="{Binding IsAcsending}" HorizontalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <DataGrid CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding DisplayedModels}" SelectedItem="{Binding SelectedModel}" AutoGenerateColumns="False">
+        <Button x:Name="addNewModel" Grid.Row="1" RenderOptions.BitmapScalingMode="HighQuality" ToolTip="Добавить модель" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignIconButton}" Margin="15,5" Width="30" Height="30" VerticalAlignment="Top" Cursor="Hand" Click="addNewModel_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/Images/Vector-1.png" RenderOptions.BitmapScalingMode="HighQuality"  />
+            </Button.Background>
+        </Button>
+        <DataGrid Margin="0,40,0,0" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding DisplayedModels}" SelectedItem="{Binding SelectedModel}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="2*" Binding="{Binding ModelName}"/>
-                <DataGridTextColumn Header="Цвет" Width="*" Binding="{Binding Color.Name}"/>
+                <DataGridTemplateColumn Header="Цвет" Width="2*" CellTemplate="{StaticResource ContextMenuTemplate}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
@@ -53,7 +68,6 @@
                 <Button Foreground="White" x:Name="Forward" Content="→" Width="50" FontSize="20" Margin="0,0,5,0" Click="Forward_Click"/>
                 <Button Foreground="White" x:Name="ToLast" Content="»" Width="50" FontSize="20" Click="ToLast_Click"/>
             </StackPanel>
-            <Button x:Name="AddModel" Width="150" Foreground="White" Content="Добавить модель" HorizontalAlignment="Right" Margin="15,0,15,10" VerticalAlignment="Bottom" Click="AddModel_Click"/>
         </Grid>
 
 

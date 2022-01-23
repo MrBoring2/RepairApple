@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         mc:Ignorable="d"
+                  ResizeMode="NoResize"
                   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
                   
         FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="APPLE СЕРВИС | Добавление материала" Height="580" Width="1000">
+        Title="APPLE СЕРВИС | Добавление материала" Height="580" Width="1000" Icon="/Resources/Images/logo.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -36,12 +37,12 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1">
                             <TextBlock FontSize="14" Text="Количество" HorizontalAlignment="Center"/>
-                            <mde:OversizedNumberSpinner Height="60" FontSize="14" Foreground="White" HorizontalAlignment="Center" Width="40" Max="400" Min="1" Value="{Binding Amount, Mode=TwoWay}" Margin="5"/>
+                            <mde:OversizedNumberSpinner IsEnabled="{Binding IsOperationAdd}" Height="60" FontSize="14" Foreground="White" HorizontalAlignment="Center" Width="40" Max="400" Min="1" Value="{Binding Amount, Mode=TwoWay}" Margin="5"/>
                         </StackPanel>
                     </Grid>
                     <StackPanel>
-                        <TextBlock FontSize="14" Text="Характеристики" Margin="15,0,15,0"/>
-                        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="15,0,15,0"/>
+                        <TextBlock Visibility="{Binding EditVisibility}" FontSize="14" Text="Характеристики" Margin="15,0,15,0"/>
+                        <TextBox Visibility="{Binding EditVisibility}" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="15,0,15,0" Cursor="IBeam"/>
                     </StackPanel>
                 </StackPanel>
                 <Grid Grid.Column="1" Background="Transparent">
@@ -50,12 +51,11 @@
                         <ScrollViewer>
                             <StackPanel>
                                 <TextBlock FontSize="14" Text="Тип материала" Margin="10,10,10,0"/>
-                                <ComboBox Margin="10,0,10,10" ItemsSource="{Binding MaterialTypes}" FontSize="16" SelectedItem="{Binding SelectedMaterialType}" DisplayMemberPath="Name"/>
+                                <ComboBox IsEnabled="{Binding IsOperationAdd}" Margin="10,0,10,10" ItemsSource="{Binding MaterialTypes}" FontSize="16" SelectedItem="{Binding SelectedMaterialType}" DisplayMemberPath="Name"/>
                                 <TextBlock FontSize="14" Text="Модель телефона" Margin="10,10,10,0"/>
-                                <ComboBox materialDesign:HintAssist.Hint="Выберите модель" Margin="10,0,10,10" ItemsSource="{Binding Models}" FontSize="16" SelectedItem="{Binding SelectedModel}"/>
+                                <ComboBox IsEnabled="{Binding IsOperationAdd}" materialDesign:HintAssist.Hint="Выберите модель" Margin="10,0,10,10" ItemsSource="{Binding Models}" FontSize="16" SelectedItem="{Binding SelectedModel}"/>
 
-
-                                <ListView  Margin="10" ItemContainerStyle="{StaticResource MaterialDesignNavigationListBoxItem}" ItemsSource="{Binding SelectedModels}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SelectedModelInList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ListView IsEnabled="{Binding IsOperationAdd}" Margin="10" ItemContainerStyle="{StaticResource MaterialDesignNavigationListBoxItem}" ItemsSource="{Binding SelectedModels}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SelectedModelInList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="{x:Type ListViewItem}">
                                             <Grid>
@@ -69,7 +69,7 @@
                         </ScrollViewer>
                     </materialDesign:Card>
                 </Grid>
-                <Button Content="Сохранить" VerticalAlignment="Bottom" Margin="15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Button_Click" Cursor="Hand"/>
+                <Button x:Name="Save" Content="Сохранить" VerticalAlignment="Bottom" Margin="15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Save_Click" Cursor="Hand"/>
             </Grid>
         </Border>
     </Grid>

@@ -42,6 +42,20 @@ namespace AppleRepair.Views.Windows
                 //{
                 //    foreach (var m in db.Material)
                 //    {
+                //        if (item.ModelName.Equals("iPhone SE"))
+                //        {
+                //            if (m.Name.ToLower().Contains("se") && !m.Name.ToLower().Contains("se 2020"))
+                //            {
+                //                item.Material.Add(m);
+                //            }
+                //        }
+                //    }
+                //}
+                //db.SaveChanges();
+                //foreach (var item in db.PhoneModel)
+                //{
+                //    foreach (var m in db.Material)
+                //    {
                 //        var temp = item.ModelName.ToLower().Remove(0, 7);
 
                 //        if (temp.All(Char.IsDigit))
@@ -80,7 +94,7 @@ namespace AppleRepair.Views.Windows
 
                 IsBtnEnabled = false;
                 Employee user = null;
-                await Task.Run(() => user = db.Employee.FirstOrDefault(p => p.Login.Equals(Login) && p.Password.Equals(Password)));
+                await Task.Run(() => user = db.Employee.FirstOrDefault(p => p.Login.Equals(Login) && p.Password.Equals(passwordText.Password)));
                 if (user != null)
                 {
                     UserService.Instance.SetEmployee(user);

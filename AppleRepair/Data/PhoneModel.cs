@@ -12,8 +12,8 @@ namespace AppleRepair.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhoneModel()
         {
-            Order = new HashSet<Order>();
-            Material = new HashSet<Material>();
+            Order = new List<Order>();
+            Material = new List<Material>();
         }
 
         public int Id { get; set; }

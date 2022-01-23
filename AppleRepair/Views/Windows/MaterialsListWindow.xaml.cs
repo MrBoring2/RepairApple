@@ -25,11 +25,20 @@ namespace AppleRepair.Views.Windows
     /// </summary>
     public partial class MaterialsListWindow : BaseWindow
     {
-       
+        public Material SelectedMaterial;
         public MaterialsListWindow()
         {
             InitializeComponent();
+            MaterialsListPage materialsListPage = new MaterialsListPage(true);
+            materialsListPage.onSendMaterial += MaterialsListPage_onSendMaterial;
+            frame.Navigate(materialsListPage);
+            DataContext = this;
         }
-        public BasePage MaterialsPage { get; set; } 
+
+        private void MaterialsListPage_onSendMaterial(Material material)
+        {
+            SelectedMaterial = material;
+            this.DialogResult = true;
+        }
     }
 }

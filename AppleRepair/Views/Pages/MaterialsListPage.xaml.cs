@@ -26,19 +26,28 @@ namespace AppleRepair.Views.Pages
     /// </summary>
     public partial class MaterialsListPage : BasePage
     {
+        public delegate void SendMaterial(Material material);
+        public event SendMaterial onSendMaterial;
+        private bool isModal;
         private bool isAcsending;
         private int currentPage;
         private int itemsPerPage;
         private string selectedMaterialType;
         private string search;
+        private string selectedRemoveCheck;
         private SortParam selectedSort;
         private ObservableCollection<Material> displayedMaterials;
+
         private Material selectedMaterial;
+
         public MaterialsListPage()
         {
             InitializeFields();
         }
-
+        public MaterialsListPage(bool isModel = false) : this()
+        {
+            this.isModal = isModel;
+        }
         public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
         public SortParam SelectedSort { get => selectedSort; set { selectedSort = value; RefreshMaterials(); OnPropertyChanged(); } }
         public string SelectedMaterialType { get { return selectedMaterialType; } set { selectedMaterialType = value; RefreshMaterials(); OnPropertyChanged(); } }
@@ -63,6 +72,7 @@ namespace AppleRepair.Views.Pages
             }
         }
         public List<Material> Materials { get; set; }
+        public List<string> RemoveCheckCollection { get; set; }
         public List<SortParam> SortParams { get; set; }
         public int ItemsPerPage
         {
@@ -70,6 +80,7 @@ namespace AppleRepair.Views.Pages
             set { itemsPerPage = value; OnPropertyChanged(); }
         }
         public ObservableCollection<Material> DisplayedMaterials { get => displayedMaterials; set { displayedMaterials = value; OnPropertyChanged(); } }
+        public string SelectedRemoveCheck { get => selectedRemoveCheck; set { selectedRemoveCheck = value; OnPropertyChanged(); RefreshMaterials(); } }
         public string Search
         {
             get => search;
@@ -104,10 +115,22 @@ namespace AppleRepair.Views.Pages
 
             await Task.Run(LoadTypes);
             await Task.Run(LoadSort);
+            await Task.Run(LoadRemoveCheckCollection);
 
             IsAcsending = true;
             InitializeComponent();
             DataContext = this;
+        }
+
+        private void LoadRemoveCheckCollection()
+        {
+            RemoveCheckCollection = new List<string>
+            {
+                "Все",
+                "Есть",
+                "Отсутствует"
+            };
+            selectedRemoveCheck = RemoveCheckCollection.FirstOrDefault();
         }
 
         private void LoadSort()
@@ -171,6 +194,15 @@ namespace AppleRepair.Views.Pages
 
             list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
 
+            if (SelectedRemoveCheck == "Есть")
+            {
+                list = list.Where(p => p.IsActive == false).ToList();
+            }
+            else if (SelectedRemoveCheck == "Отсутствует")
+            {
+                list = list.Where(p => p.IsActive == true).ToList();
+            }
+
             list = list.Skip(currentPage * ItemsPerPage).Take(ItemsPerPage).ToList();
 
             DisplayedMaterials = new ObservableCollection<Material>(list);
@@ -186,7 +218,7 @@ namespace AppleRepair.Views.Pages
             //else EmptyVisibility = Visibility.Hidden;
 
         }
-      
+
         private int MaxPage
         {
             get
@@ -197,6 +229,15 @@ namespace AppleRepair.Views.Pages
 
                 //Фильтруем список клиентов по полу
                 list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
+                
+                if (SelectedRemoveCheck == "Есть")
+                {
+                    list = list.Where(p => p.IsActive == false).ToList();
+                }
+                else if (SelectedRemoveCheck == "Отсутствует")
+                {
+                    list = list.Where(p => p.IsActive == true).ToList();
+                }
 
                 return (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) > 0 ? (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) : 1;
             }
@@ -233,26 +274,69 @@ namespace AppleRepair.Views.Pages
             CurrentPage = MaxPage - 1;
         }
 
-        private void edit_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var icon = sender as PackIcon;
-            var par = ((icon.Parent as StackPanel).Parent as Grid);
-            var d = par.DataContext as Material;
-            MessageBox.Show(d.Name);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var materilaWindow = new PhoneMaterialWindow();
-            if(materilaWindow.ShowDialog() == true)
-            {
-                LoadMaterials();
-            }
-        }
 
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (isModal)
+            {
+                onSendMaterial?.Invoke(SelectedMaterial);
+            }
+        }
+        private async void edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = (icon.Parent as StackPanel).Parent as Grid;
+            var material = par.DataContext as Material;
+            var materialWindow = new PhoneMaterialWindow(false, material) { Title = "APPLE СЕРВИС | Редактирование материала" };
+            if (materialWindow.ShowDialog() == true)
+            {
+                await Task.Run(LoadMaterials);
+                await Task.Run(RefreshMaterials);
+            }
+        }
 
+        private async void remove_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = (icon.Parent as StackPanel).Parent as Grid;
+            var material = par.DataContext as Material;
+            using (var db = new AppleRepairContext())
+            {
+                if (material != null)
+                {
+                    db.Material.Attach(material);
+                    material.IsActive = false;
+                    await Task.Run(() => db.SaveChangesAsync());
+                    await Task.Run(RefreshMaterials);
+                }
+            }
+        }
+
+        private async void addNewMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            var materilaWindow = new PhoneMaterialWindow();
+            if (materilaWindow.ShowDialog() == true)
+            {
+                await Task.Run(LoadMaterials);
+                await Task.Run(RefreshMaterials);
+            }
+        }
+
+        private async void restore_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = ((icon.Parent as StackPanel).Parent as Grid);
+            var material = par.DataContext as Material;
+            using (var db = new AppleRepairContext())
+            {
+                if (material != null)
+                {
+                    db.Material.Attach(material);
+                    material.IsActive = true;
+                    await Task.Run(() => db.SaveChangesAsync());
+                    await Task.Run(RefreshMaterials);
+                }
+            }
         }
     }
 }

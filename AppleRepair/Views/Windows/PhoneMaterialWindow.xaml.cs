@@ -25,26 +25,51 @@ namespace AppleRepair.Views.Windows
     /// </summary>
     public partial class PhoneMaterialWindow : BaseWindow
     {
+        private Material currentMaterial;
+        private Visibility editVisibility;
+        private bool isOperationAdd;
         private string materialName;
-        private float price;
+        private double price;
         private int amount;
         private string description;
         private MaterialType selectedMaterialType;
         private string selectedModel;
         private string selectedModelInList;
         private ObservableCollection<string> selectedModels;
-        public PhoneMaterialWindow()
+        public PhoneMaterialWindow(bool isOperationAdd = true, Material material = null)
         {
 
             InitializeComponent();
-
+            IsOperationAdd = isOperationAdd;
+            EditVisibility = Visibility.Visible;
             DataContext = this;
             SelectedModels = new ObservableCollection<string>();
             LoadTypes();
             LoadModels();
+            if (!isOperationAdd && material != null)
+            {
+                EditVisibility = Visibility.Hidden;
+                MaterialName = material.Name;
+                Price = material.Price;
+                Amount = material.Amount;
+                currentMaterial = material;
+                using (var db = new AppleRepairContext())
+                {
+                    db.Material.Attach(material);
+                    var modelsString = new List<string>();
+                    foreach (var item in material.PhoneModel)
+                    {
+                        modelsString.Add(item.ModelName);
+                    }
+                    SelectedModels = new ObservableCollection<string>(modelsString.Distinct().ToList());
+                }
+            }
+
         }
         public string MaterialName { get { return materialName; } set { materialName = value; OnPropertyChanged(); } }
-        public float Price { get { return price; } set { price = value; OnPropertyChanged(); } }
+        public Visibility EditVisibility { get { return editVisibility; } set { editVisibility = value; OnPropertyChanged(); } }
+        public bool IsOperationAdd { get { return isOperationAdd; } set { isOperationAdd = value; OnPropertyChanged(); } }
+        public double Price { get { return price; } set { price = value; OnPropertyChanged(); } }
         public int Amount
         {
             get { return amount; }
@@ -81,7 +106,7 @@ namespace AppleRepair.Views.Windows
             MaterialName = $"{SelectedMaterialType.Name} для ";
             foreach (var item in SelectedModels)
             {
-                if(item != SelectedModels.LastOrDefault())
+                if (item != SelectedModels.LastOrDefault())
                     MaterialName += $"{item}/";
                 else MaterialName += $"{item} ";
             }
@@ -112,7 +137,6 @@ namespace AppleRepair.Views.Windows
         private bool Validate()
         {
             if (!string.IsNullOrEmpty(MaterialName)
-                && !string.IsNullOrEmpty(Description)
                 && SelectedModels.Count > 0
                 && Price > 0
                 && Amount > 0)
@@ -126,36 +150,52 @@ namespace AppleRepair.Views.Windows
             }
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Save_Click(object sender, RoutedEventArgs e)
         {
             if (Validate())
             {
-                using (var db = new AppleRepairContext())
+                if (IsOperationAdd)
                 {
-                    var material = new Material
+                    using (var db = new AppleRepairContext())
                     {
-                        Amount = Amount,
-                        MaterialTypeId = db.MaterialType.Find(SelectedMaterialType.Id).Id,
-                        Name = MaterialName,
-                        Price = Price,
-                        IsActive = true
-                    };
-                    var models = db.PhoneModel.Where(p => SelectedModels.Contains(p.ModelName)).ToList();
-                    foreach (var item in models)
-                    {
-                        item.Material.Add(material);
-                    }
+                        var material = new Material
+                        {
+                            Amount = Amount,
+                            MaterialTypeId = db.MaterialType.Find(SelectedMaterialType.Id).Id,
+                            Name = MaterialName,
+                            Price = Price,
+                            IsActive = true
+                        };
+                        var models = db.PhoneModel.Where(p => SelectedModels.Contains(p.ModelName)).ToList();
+                        foreach (var item in models)
+                        {
+                            item.Material.Add(material);
+                        }
 
-                    if(db.Material.FirstOrDefault(p=>p.Name.Equals(material.Name)) == null)
-                    {
-                        db.Material.Add(material);
-                        await db.SaveChangesAsync();
-                        MessageBox.Show("Материал успешно добавлен!");
-                        this.DialogResult = true;
+                        if (db.Material.FirstOrDefault(p => p.Name.Equals(material.Name)) == null)
+                        {
+                            db.Material.Add(material);
+                            await db.SaveChangesAsync();
+                            MessageBox.Show("Материал успешно добавлен!");
+                            this.DialogResult = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Такой материал уже существует!");
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    using (var db = new AppleRepairContext())
                     {
-                        MessageBox.Show("Такой материал уже существует!");
+                        var material = db.Material.Find(currentMaterial.Id);
+
+                        material.Price = Price;
+                        await Task.Run(() => db.SaveChangesAsync());
+                        MessageBox.Show("Материал успешно изменён!");
+                        this.DialogResult = true;
+
                     }
                 }
             }

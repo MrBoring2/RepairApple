@@ -92,7 +92,7 @@ namespace AppleRepair.Views.Pages
         {
             using (var db = new AppleRepairContext())
             {
-                Orders = new List<Order>(db.Order.Include("Client").Include("PhoneModel"));
+                Orders = new List<Order>(db.Order.Include("Client").Include("PhoneModel").Include("PhoneModel.Color"));
                 DisplayedOrders = new ObservableCollection<Order>(Orders);
 
                 IsAcsending = true;
@@ -168,7 +168,6 @@ namespace AppleRepair.Views.Pages
             //    Paginator.SelectedPageNumber = 1;
             //}
             //else EmptyVisibility = Visibility.Hidden;
-
         }
 
         private int MaxPage
@@ -231,7 +230,7 @@ namespace AppleRepair.Views.Pages
 
 
 
-        private void check_MouseDown(object sender, MouseButtonEventArgs e)
+        private async void check_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var icon = sender as PackIcon;
             var par = ((icon.Parent as StackPanel).Parent as Grid);
@@ -243,7 +242,8 @@ namespace AppleRepair.Views.Pages
                     var finishOrderWindow = new FinishOrderWindow(order);
                     if (finishOrderWindow.ShowDialog() == true)
                     {
-                        LoadOrders();
+                        await Task.Run(LoadOrders);
+                       // await Task.Run(RefreshOrders);
                     }
                 }
                 else
@@ -302,12 +302,12 @@ namespace AppleRepair.Views.Pages
             }
         }
 
-        private void addNewOrder_Click(object sender, RoutedEventArgs e)
+        private async void addNewOrder_Click(object sender, RoutedEventArgs e)
         {
             var orderWindow = new OrderWindow();
             if (orderWindow.ShowDialog() == true)
             {
-                LoadOrders();
+                await Task.Run(LoadOrders);
             }
         }
     }

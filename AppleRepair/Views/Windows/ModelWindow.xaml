@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         mc:Ignorable="d"
+                  ResizeMode="NoResize"
                   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
                   
@@ -24,7 +25,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBox materialDesign:HintAssist.Hint="iPhone (номер модели)" FontSize="14" VerticalAlignment="Top" Text="{Binding PhoneModelName}" Grid.ColumnSpan="1" Margin="15,5,15,0" Cursor="IBeam"/>
+                        <TextBox IsReadOnly="{Binding IsOperationAdd}" materialDesign:HintAssist.Hint="iPhone (номер модели)" FontSize="14" VerticalAlignment="Top" Text="{Binding PhoneModelName}" Grid.ColumnSpan="1" Margin="15,5,15,0" Cursor="IBeam"/>
                     </Grid>
 
                     <TextBlock FontSize="14" Text="Цвет телефона" Margin="15,25,15,0"/>
@@ -44,7 +45,7 @@
                     <StackPanel/>
                 </StackPanel>
 
-                <Button Content="Сохранить" VerticalAlignment="Bottom" Margin="15,0,15,15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Button_Click" Cursor="Hand"/>
+                <Button x:Name="Save" Content="Сохранить" VerticalAlignment="Bottom" Margin="15,0,15,15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Save_Click" Cursor="Hand"/>
             </Grid>
         </Border>
     </Grid>

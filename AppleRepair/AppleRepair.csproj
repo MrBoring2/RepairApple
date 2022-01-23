@@ -108,6 +108,10 @@
     <Compile Include="Data\Supplier.cs" />
     <Compile Include="Models\ItemMenu.cs" />
     <Compile Include="Models\SortParam.cs" />
+    <Compile Include="Models\SpendedMaterial.cs" />
+    <Compile Include="Resources\Converters\RemoveVisibilityConverter.cs" />
+    <Compile Include="Resources\Converters\RestoreVisibilityConverter.cs" />
+    <Compile Include="Resources\Converters\ColorFromDateConverter.cs" />
     <Compile Include="Resources\Converters\ModelInListConverter.cs" />
     <Compile Include="Services\OperatingSystemsSearchSuggestionsSource.cs" />
     <Compile Include="Services\Paginator.cs" />

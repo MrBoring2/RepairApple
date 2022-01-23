@@ -18,6 +18,15 @@
                 <ResourceDictionary>
                     <converters:ModelInListConverter x:Key="modelConv"/>
                 </ResourceDictionary>
+                <ResourceDictionary>
+                    <converters:ColorFromDateConverter x:Key="colorFromDate"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <converters:ResotoreVisibilityConverter x:Key="restoreVisibilityConverter"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <converters:RemoveVisibilityConverter x:Key="removeVisibilityConverter"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -168,7 +168,6 @@ C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsLis
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsListWindow.baml
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.g.cs
 C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.baml
-C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\ClientsListWindow.g.cs
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\ModelWindow.g.cs
 C:\Users\user30\GIT\my\RepairApple\AppleRepair\obj\Debug\Views\Windows\OrderWindow.g.cs
@@ -251,3 +250,9 @@ C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.CopyComplete
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\AppleRepair.exe
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\AppleRepair.pdb
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\FinishOrderWindow.g.cs
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\MaterialsListWindow.g.cs
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\AppleRepair_Content.g.cs
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\FinishOrderWindow.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\MaterialsListWindow.baml
+C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache

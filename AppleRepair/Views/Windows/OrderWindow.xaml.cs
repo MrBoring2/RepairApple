@@ -72,7 +72,7 @@ namespace AppleRepair.Views.Windows
         {
             using (var db = new AppleRepairContext())
             {
-                Models = db.PhoneModel.ToList();
+                Models = db.PhoneModel.Include("Color").OrderBy(p => p.Color.Name).ToList();
                 SelectedModel = Models.FirstOrDefault();
             }
         }
@@ -91,8 +91,8 @@ namespace AppleRepair.Views.Windows
 
         private bool Validate()
         {
-            var descriptionRange = new TextRange(descriptionText.Document.ContentStart, descriptionText.Document.ContentEnd);
-            if (!string.IsNullOrEmpty(descriptionRange.Text)
+
+            if (!string.IsNullOrEmpty(Description)
                 && SelectedServices.Count > 0)
             {
                 return true;
@@ -104,20 +104,20 @@ namespace AppleRepair.Views.Windows
             }
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Save_Click(object sender, RoutedEventArgs e)
         {
             if (Validate())
             {
                 using (var db = new AppleRepairContext())
                 {
-                    var descriptionRange = new TextRange(descriptionText.Document.ContentStart, descriptionText.Document.ContentEnd);
+
                     var order = new Order
                     {
                         StartDate = DateTime.Now.ToLocalTime(),
                         EmployeeId = UserService.Instance.CurrentUser.Id,
                         ClientId = SelectedClient.Id,
-                        EndDate = Date.AddHours(Time.Hour).AddMinutes(Time.Minute).AddSeconds(Time.Second),
-                        Decription = descriptionRange.Text,
+                        EndDate = new DateTime(Date.Year, Date.Month, Date.Day, Time.Hour, Time.Minute, Time.Second),
+                        Decription = Description,
 
                         PhoneModelId = SelectedModel.Id,
                         Status = "В процессе выполнения",
@@ -130,9 +130,17 @@ namespace AppleRepair.Views.Windows
                     }
                     order.Price = services.Sum(p => p.Price);
                     db.Order.Add(order);
-                    await db.SaveChangesAsync();
-                    MessageBox.Show("Заказ успешно создан!");
-                    this.DialogResult = true;
+
+                    if (order.EndDate >= DateTime.Now.AddDays(1))
+                    { 
+                        await db.SaveChangesAsync();
+                        MessageBox.Show("Заказ успешно создан!");
+                        this.DialogResult = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Окончание заказа должно быть минимум через день после его начала!");
+                    }
                 }
             }
         }

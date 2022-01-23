@@ -1,6 +1,7 @@
 ﻿using AppleRepair.Data;
 using AppleRepair.Models;
 using AppleRepair.Views.Windows;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,7 +34,7 @@ namespace AppleRepair.Views.Pages
         private ObservableCollection<PhoneModel> displayedModels;
         private PhoneModel selectedModel;
         public ModelsListPage()
-        {         
+        {
             InitializeFields();
         }
         public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshModels(); OnPropertyChanged(); } }
@@ -69,8 +70,8 @@ namespace AppleRepair.Views.Pages
             get => currentPage;
             set
             {
-              
-                    currentPage = value;
+
+                currentPage = value;
                 OnPropertyChanged();
                 RefreshModels();
             }
@@ -196,12 +197,38 @@ namespace AppleRepair.Views.Pages
         }
 
 
-        private void AddModel_Click(object sender, RoutedEventArgs e)
+        private void remove_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //var icon = sender as PackIcon;
+            //var par = ((icon.Parent as StackPanel).Parent as Grid);
+            //var model = par.DataContext as PhoneModel;
+            //using (var db = new AppleRepairContext())
+            //{
+            //    db.PhoneModel.Attach(model);
+            //    model
+            //}
+        }
+
+        private async void edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = (icon.Parent as StackPanel).Parent as Grid;
+            var model = par.DataContext as PhoneModel;
+            var modelWindow = new ModelWindow(false, model) { Title = "APPLE СЕРВИС | Редактирование модели" };
+            if (modelWindow.ShowDialog() == true)
+            {
+                await Task.Run(LoadModels);
+                await Task.Run(RefreshModels);
+            }
+        }
+
+        private async void addNewModel_Click(object sender, RoutedEventArgs e)
         {
             var modelWindow = new ModelWindow();
-            if(modelWindow.ShowDialog() == true)
+            if (modelWindow.ShowDialog() == true)
             {
-                LoadModels();
+                await Task.Run(LoadModels);
+                await Task.Run(RefreshModels);
             }
         }
     }
