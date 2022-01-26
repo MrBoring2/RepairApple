@@ -26,6 +26,7 @@ namespace AppleRepair.Views.Pages
     /// </summary>
     public partial class MaterialsListPage : BasePage
     {
+        private Visibility adminVisibility;
         public delegate void SendMaterial(Material material);
         public event SendMaterial onSendMaterial;
         private bool isModal;
@@ -43,11 +44,13 @@ namespace AppleRepair.Views.Pages
         public MaterialsListPage()
         {
             InitializeFields();
+            
         }
         public MaterialsListPage(bool isModel = false) : this()
         {
             this.isModal = isModel;
         }
+        public Visibility AdminVisibility { get => adminVisibility; set { adminVisibility = value; OnPropertyChanged(); } }
         public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
         public SortParam SelectedSort { get => selectedSort; set { selectedSort = value; RefreshMaterials(); OnPropertyChanged(); } }
         public string SelectedMaterialType { get { return selectedMaterialType; } set { selectedMaterialType = value; RefreshMaterials(); OnPropertyChanged(); } }
@@ -111,14 +114,25 @@ namespace AppleRepair.Views.Pages
             ItemsPerPage = 20;
             search = String.Empty;
 
-            await Task.Run(LoadMaterials);
+             LoadMaterials();
 
-            await Task.Run(LoadTypes);
-            await Task.Run(LoadSort);
-            await Task.Run(LoadRemoveCheckCollection);
+             LoadTypes();
+            LoadSort();
+             LoadRemoveCheckCollection();
 
             IsAcsending = true;
+
+           
+            if (UserService.Instance.CurrentUser.RoleId == 2)
+            {
+                AdminVisibility = Visibility.Visible;
+            }
+            else
+            {
+                AdminVisibility = Visibility.Hidden;
+            }
             InitializeComponent();
+
             DataContext = this;
         }
 
@@ -229,7 +243,7 @@ namespace AppleRepair.Views.Pages
 
                 //Фильтруем список клиентов по полу
                 list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
-                
+
                 if (SelectedRemoveCheck == "Есть")
                 {
                     list = list.Where(p => p.IsActive == false).ToList();

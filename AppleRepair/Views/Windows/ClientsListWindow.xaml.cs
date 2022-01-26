@@ -165,7 +165,7 @@ namespace AppleRepair.Views.Windows
 
         private void AddOrder_Click(object sender, RoutedEventArgs e)
         {
-            var orderWindow = new OrderWindow();
+            var orderWindow = new OrderWindow(false);
             if (orderWindow.ShowDialog() == true)
             {
 

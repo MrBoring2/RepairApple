@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\MrBoring\GIT\RepairApple\AppleRepair\obj\Debug\
+C:\Users\user35.CHENK\GIT\RepairApple\AppleRepair\obj\Debug\
 AppleRepair
 none
 false
 DEBUG;TRACE
-C:\Users\MrBoring\GIT\RepairApple\AppleRepair\App.xaml
-14-2081711286
-1297616048
-421425483544
-2610759070
-Resources\Styles\ListViewStyle.xaml;Resources\Styles\MainControlsTemplates.xaml;Resources\Styles\WindowStyle.xaml;Views\Pages\MaterialsListPage.xaml;Views\Pages\ModelsListPage.xaml;Views\Pages\OrdersListPage.xaml;Views\Windows\ClientsListWindow.xaml;Views\Windows\FinishOrderWindow.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainAppWindow.xaml;Views\Windows\MaterialsListWindow.xaml;Views\Windows\ModelWindow.xaml;Views\Windows\OrderWindow.xaml;Views\Windows\PhoneMaterialWindow.xaml;
+C:\Users\user35.CHENK\GIT\RepairApple\AppleRepair\App.xaml
+161983523427
+1649668795
+44-1598274499
+26-123970340
+Resources\Styles\ListViewStyle.xaml;Resources\Styles\MainControlsTemplates.xaml;Resources\Styles\WindowStyle.xaml;Views\Pages\DeliveryPage.xaml;Views\Pages\MaterialsListPage.xaml;Views\Pages\ModelsListPage.xaml;Views\Pages\OrdersListPage.xaml;Views\Windows\ClientsListWindow.xaml;Views\Windows\DeliveryWindow.xaml;Views\Windows\FinishOrderWindow.xaml;Views\Windows\LoginWindow.xaml;Views\Windows\MainAppWindow.xaml;Views\Windows\MaterialsListWindow.xaml;Views\Windows\ModelWindow.xaml;Views\Windows\OrderWindow.xaml;Views\Windows\PhoneMaterialWindow.xaml;
 
 False
 

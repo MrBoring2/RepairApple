@@ -304,10 +304,19 @@ namespace AppleRepair.Views.Pages
 
         private async void addNewOrder_Click(object sender, RoutedEventArgs e)
         {
-            var orderWindow = new OrderWindow();
+            var orderWindow = new OrderWindow(false);
             if (orderWindow.ShowDialog() == true)
             {
                 await Task.Run(LoadOrders);
+            }
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var orderWindow = new OrderWindow(true, SelectedOrder);
+            if (orderWindow.ShowDialog() == true)
+            {
+                
             }
         }
     }

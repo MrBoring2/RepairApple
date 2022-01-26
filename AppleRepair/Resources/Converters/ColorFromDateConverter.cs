@@ -25,7 +25,7 @@ namespace AppleRepair.Resources.Converters
                 {
                     return (SolidColorBrush)new BrushConverter().ConvertFrom("#FFCC80");
                 }
-                else if ((order.EndDate.Date - DateTime.Now.Date).Days == 0)
+                else if ((order.EndDate.Date - DateTime.Now.Date).Days <= 0)
                 {
                     return (SolidColorBrush)new BrushConverter().ConvertFrom("#FFCCBC");
                 }

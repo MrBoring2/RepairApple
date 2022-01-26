@@ -17,13 +17,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <Border Margin="20,20,20,20" CornerRadius="30" BorderBrush="#9E9E9E" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="276*"/>
                     <ColumnDefinition Width="203*"/>
-                    
+
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <TextBlock FontSize="14" Text="Клиент" Margin="15,25,15,0"/>
@@ -32,8 +32,8 @@
                             <ColumnDefinition Width="450*"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox FontSize="14" VerticalAlignment="Top" Text="{Binding SelectedClient.FullName}" IsReadOnly="True" Grid.ColumnSpan="1" Margin="15,5,15,0"/>
-                        <Button x:Name="Select" Grid.Column="1" Margin="5" Content="Выбрать" Foreground="White" Click="Select_Click"/>
+                        <TextBox IsEnabled="{Binding IsElEnabled}" FontSize="14" VerticalAlignment="Top" Text="{Binding SelectedClient.FullName}" IsReadOnly="True" Grid.ColumnSpan="1" Margin="15,5,15,0"/>
+                        <Button Visibility="{Binding IsVisibility}" x:Name="Select" Grid.Column="1" Margin="5" Content="Выбрать" Foreground="White" Click="Select_Click"/>
                     </Grid>
 
                     <TextBlock FontSize="14" Text="Модель телефона" Margin="15,25,15,0"/>
@@ -42,7 +42,7 @@
                             <ColumnDefinition Width="450*"/>
                             <ColumnDefinition Width="110"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox FontSize="14" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel}" Margin="15,5,0,0">
+                        <ComboBox IsEnabled="{Binding IsElEnabled}" FontSize="14" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel}" Margin="15,5,0,0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type ComboBoxItem}">
                                     <Grid HorizontalAlignment="Stretch">
@@ -60,13 +60,13 @@
                             <ColumnDefinition Width="100*"/>
                             <ColumnDefinition Width="100*"/>
                         </Grid.ColumnDefinitions>
-                        <DatePicker FontSize="14" Margin="15,5,15,5" SelectedDate="{Binding Date}"/>
-                        <materialDesign:TimePicker Grid.Column="1" FontSize="14" Margin="15,5,15,5" SelectedTime="{Binding Time}"/>
+                        <DatePicker IsEnabled="{Binding IsElEnabled}" FontSize="14" Margin="15,5,15,5" SelectedDate="{Binding Date}"/>
+                        <materialDesign:TimePicker Grid.Column="1" IsEnabled="{Binding IsElEnabled}" FontSize="14" Margin="15,5,15,5" SelectedTime="{Binding Time}"/>
                     </Grid>
 
                     <StackPanel>
                         <TextBlock FontSize="14" Text="Описание проблемы" Margin="15,0,5,0"/>
-                        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontSize="14" x:Name="descriptionText" AcceptsReturn="True" TextWrapping="Wrap"  Margin="15,0,15,0" Cursor="IBeam"/>
+                        <TextBox IsEnabled="{Binding IsElEnabled}" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontSize="14" x:Name="descriptionText" AcceptsReturn="True" TextWrapping="Wrap"  Margin="15,0,15,0" Cursor="IBeam"/>
                     </StackPanel>
                 </StackPanel>
                 <Grid Grid.Column="1" Background="Transparent">
@@ -74,11 +74,11 @@
                     <materialDesign:Card UniformCornerRadius="20" Margin="15" Background="#FFF9F9F9" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="All">
                         <ScrollViewer>
                             <StackPanel>
-                                
-                                <TextBlock FontSize="14" Text="Услуга" Margin="10,10,10,0"/>
-                                <ComboBox materialDesign:HintAssist.Hint="Выберите услугу" Margin="10,0,10,10" ItemsSource="{Binding Services}" FontSize="16" SelectedItem="{Binding SelectedService}"/>
 
-                                <ListView  Margin="10" ItemContainerStyle="{StaticResource listViewItemStyle}" ItemsSource="{Binding SelectedServices}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SelectedSerivce}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBlock FontSize="14" Text="Услуга" Margin="10,10,10,0"/>
+                                <ComboBox Visibility="{Binding IsVisibility}" materialDesign:HintAssist.Hint="Выберите услугу" Margin="10,0,10,10" ItemsSource="{Binding Services}" FontSize="16" SelectedItem="{Binding SelectedService}"/>
+
+                                <ListView IsEnabled="{Binding IsElEnabled}" Margin="10" ItemContainerStyle="{StaticResource listViewItemStyle}" ItemsSource="{Binding SelectedServices}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SelectedSerivce}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="{x:Type ListViewItem}">
                                             <Grid>
@@ -92,7 +92,7 @@
                         </ScrollViewer>
                     </materialDesign:Card>
                 </Grid>
-                <Button x:Name="Save" Content="Сохранить" VerticalAlignment="Bottom" Margin="15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Save_Click" Cursor="Hand"/>
+                <Button Visibility="{Binding IsVisibility}" x:Name="Save" Content="Сохранить" VerticalAlignment="Bottom" Margin="15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Save_Click" Cursor="Hand"/>
             </Grid>
         </Border>
     </Grid>

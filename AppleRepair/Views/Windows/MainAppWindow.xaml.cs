@@ -1,5 +1,6 @@
 ﻿using AppleRepair.Models;
 using AppleRepair.Services;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -58,8 +59,12 @@ namespace AppleRepair.Views.Windows
                     this.Close();
                 }
 
+
                 WindowTitle = $"APPLE СЕРВИС | {SelectedItemMenu.Title}";
                 pageContainer.Navigate(SelectedItemMenu.Destination);
+
+
+
                 OnPropertyChanged();
             }
         }
@@ -77,7 +82,6 @@ namespace AppleRepair.Views.Windows
             {
                 new ItemMenu("Выход", MaterialDesignThemes.Wpf.PackIconKind.LocationExit, null)
             };
-
         }
         private void LoadUser()
         {
@@ -102,7 +106,7 @@ namespace AppleRepair.Views.Windows
             }
         }
 
-        private  void BaseWindow_Loaded(object sender, RoutedEventArgs e)
+        private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

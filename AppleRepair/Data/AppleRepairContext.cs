@@ -8,7 +8,7 @@ namespace AppleRepair.Data
     public partial class AppleRepairContext : DbContext
     {
         public AppleRepairContext()
-            : base("name=AppleRepairContextHome")
+            : base("name=AppleRepairContext35")
         {
 
         }

@@ -60,6 +60,11 @@
                 <ImageBrush ImageSource="/Resources/Images/Vector-1.png" RenderOptions.BitmapScalingMode="HighQuality"  />
             </Button.Background>
         </Button>
+        <Button Visibility="{Binding AdminVisibility}" x:Name="deliveryMaterial" Grid.Row="1" RenderOptions.BitmapScalingMode="HighQuality" ToolTip="Доставка материалов" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignIconButton}" Margin="55,5" Width="35" Height="35" VerticalAlignment="Top" Cursor="Hand" Click="addNewMaterial_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/AppleRepair;component/Resources/Images/delivery.png" RenderOptions.BitmapScalingMode="HighQuality"  />
+            </Button.Background>
+        </Button>
         <DataGrid Margin="0,40,0,0" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding DisplayedMaterials}" SelectedItem="{Binding SelectedMaterial}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="2*" Binding="{Binding Name}"/>

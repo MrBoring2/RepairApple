@@ -23,6 +23,8 @@ namespace AppleRepair.Views.Windows
     /// </summary>
     public partial class OrderWindow : BaseWindow
     {
+        private bool isEnabled;
+        private Visibility visibility;
         private string description;
         private PhoneModel selectedModel;
         private string selectedService;
@@ -31,7 +33,7 @@ namespace AppleRepair.Views.Windows
         private DateTime date;
         private DateTime time;
         private ObservableCollection<string> selectedServices;
-        public OrderWindow()
+        public OrderWindow(bool isForShown, Order order = null)
         {
 
             InitializeComponent();
@@ -41,8 +43,33 @@ namespace AppleRepair.Views.Windows
             Date = DateTime.Now.ToLocalTime();
             Time = DateTime.Now.ToLocalTime();
             LoadModels();
+
             LoadServices();
+            if (isForShown)
+            {
+                IsVisibility = Visibility.Collapsed;
+                using (var db = new AppleRepairContext())
+                {
+                    db.Order.Attach(order);
+                    SelectedClient = order.Client;
+                    Date = order.EndDate;
+                    Time = order.EndDate;
+                    Description = order.Decription;
+                    foreach (var item in order.Service)
+                    {
+
+                        SelectedServices.Add(item.Name);
+                    }
+                }
+
+            }
+            else
+            {
+                IsVisibility = Visibility.Visible;
+            }
         }
+        public Visibility IsVisibility { get => visibility; set { visibility = value; OnPropertyChanged(); } }
+        public bool IsElEnabled { get => isEnabled; set { isEnabled = value;OnPropertyChanged(); } }
 
         public string Description { get { return description; } set { description = value; OnPropertyChanged(); } }
         public DateTime Date { get { return date; } set { date = value; OnPropertyChanged(); } }
@@ -132,7 +159,7 @@ namespace AppleRepair.Views.Windows
                     db.Order.Add(order);
 
                     if (order.EndDate >= DateTime.Now.AddDays(1))
-                    { 
+                    {
                         await db.SaveChangesAsync();
                         MessageBox.Show("Заказ успешно создан!");
                         this.DialogResult = true;

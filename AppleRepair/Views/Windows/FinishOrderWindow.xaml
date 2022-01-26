@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
-                  xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
+        xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         mc:Ignorable="d"
                   ResizeMode="NoResize"
                   TextElement.Foreground="{DynamicResource MaterialDesignBody}"

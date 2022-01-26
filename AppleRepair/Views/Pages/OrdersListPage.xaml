@@ -26,6 +26,9 @@
 
         <Style TargetType="DataGridRow" BasedOn="{StaticResource MaterialDesignDataGridRow}">
             <Setter Property="Background" Value="{Binding ., Converter={StaticResource colorFromDate}}"/>
+
+            <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+
         </Style>
         <Style TargetType="DataGridCell" BasedOn="{StaticResource MaterialDesignDataGridCell}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -61,14 +64,14 @@
                 </StackPanel>
             </StackPanel>
 
-           
+
         </Grid>
         <Button x:Name="addNewOrder" Grid.Row="1" RenderOptions.BitmapScalingMode="HighQuality" ToolTip="Добавить заказ" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignIconButton}" Margin="15,5" Width="30" Height="30" VerticalAlignment="Top" Cursor="Hand" Click="addNewOrder_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/Resources/Images/Vector-1.png" RenderOptions.BitmapScalingMode="HighQuality"  />
             </Button.Background>
         </Button>
-        <DataGrid IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Grid.Row="1" ItemsSource="{Binding DisplayedOrders}" Margin="0,40,0,0">
+        <DataGrid IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Grid.Row="1" ItemsSource="{Binding DisplayedOrders}" SelectedItem="{Binding SelectedOrder}" Margin="0,40,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер заказа" Width="0.8*" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Клиент" Width="1.7*" Binding="{Binding Client.FullName}"/>

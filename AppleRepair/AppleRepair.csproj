@@ -117,6 +117,9 @@
     <Compile Include="Services\Paginator.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Views\Pages\BasePage.cs" />
+    <Compile Include="Views\Pages\DeliveryPage.xaml.cs">
+      <DependentUpon>DeliveryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\MaterialsListPage.xaml.cs">
       <DependentUpon>MaterialsListPage.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,9 @@
     <Compile Include="Views\Windows\BaseWindow.cs" />
     <Compile Include="Views\Windows\ClientsListWindow.xaml.cs">
       <DependentUpon>ClientsListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\DeliveryWindow.xaml.cs">
+      <DependentUpon>DeliveryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\FinishOrderWindow.xaml.cs">
       <DependentUpon>FinishOrderWindow.xaml</DependentUpon>
@@ -192,6 +198,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\DeliveryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\MaterialsListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\ClientsListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\DeliveryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\plus-circle %281%29.png" />
+    <Resource Include="Resources\Images\delivery.png" />
     <Content Include="Resources\Images\plus-circle.svg" />
     <Resource Include="Resources\Images\Vector-1.png" />
     <Resource Include="Resources\Images\Vector.png" />
