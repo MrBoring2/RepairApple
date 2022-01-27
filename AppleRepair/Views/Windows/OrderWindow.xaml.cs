@@ -48,6 +48,7 @@ namespace AppleRepair.Views.Windows
             if (isForShown)
             {
                 IsVisibility = Visibility.Collapsed;
+                IsElEnabled = false;
                 using (var db = new AppleRepairContext())
                 {
                     db.Order.Attach(order);
@@ -65,6 +66,7 @@ namespace AppleRepair.Views.Windows
             }
             else
             {
+                IsElEnabled = true;
                 IsVisibility = Visibility.Visible;
             }
         }

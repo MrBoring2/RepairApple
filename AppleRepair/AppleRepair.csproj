@@ -106,6 +106,7 @@
     <Compile Include="Data\Role.cs" />
     <Compile Include="Data\Service.cs" />
     <Compile Include="Data\Supplier.cs" />
+    <Compile Include="Models\DeliveryMaterial.cs" />
     <Compile Include="Models\ItemMenu.cs" />
     <Compile Include="Models\SortParam.cs" />
     <Compile Include="Models\SpendedMaterial.cs" />
@@ -117,8 +118,8 @@
     <Compile Include="Services\Paginator.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Views\Pages\BasePage.cs" />
-    <Compile Include="Views\Pages\DeliveryPage.xaml.cs">
-      <DependentUpon>DeliveryPage.xaml</DependentUpon>
+    <Compile Include="Views\Pages\EmployeesListPage.xaml.cs">
+      <DependentUpon>EmployeesListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\MaterialsListPage.xaml.cs">
       <DependentUpon>MaterialsListPage.xaml</DependentUpon>
@@ -135,6 +136,9 @@
     </Compile>
     <Compile Include="Views\Windows\DeliveryWindow.xaml.cs">
       <DependentUpon>DeliveryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\EmployeeWindow.xaml.cs">
+      <DependentUpon>EmployeeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\FinishOrderWindow.xaml.cs">
       <DependentUpon>FinishOrderWindow.xaml</DependentUpon>
@@ -186,6 +190,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\Styles\DataGridStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Styles\ListViewStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -198,7 +206,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\DeliveryPage.xaml">
+    <Page Include="Views\Pages\EmployeesListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\DeliveryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\EmployeeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

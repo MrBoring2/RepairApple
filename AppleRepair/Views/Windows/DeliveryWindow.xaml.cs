@@ -25,22 +25,23 @@ namespace AppleRepair.Views.Windows
     {
         private double totalPrice;
         private Supplier selectedSupplier;
-        private ObservableCollection<SpendedMaterial> selectedMaterials;
+        private ObservableCollection<DeliveryMaterial> selectedMaterials;
         public DeliveryWindow()
         {
             InitializeComponent();
 
-            SelectedMaterials = new ObservableCollection<SpendedMaterial>();
+            SelectedMaterials = new ObservableCollection<DeliveryMaterial>();
             using (var db = new AppleRepairContext())
             {
                 Suppliers = db.Supplier.ToList();
             }
+            SelectedSupplier = Suppliers.FirstOrDefault();
             UpdateTotalPrice();
             DataContext = this;
         }
         public Supplier SelectedSupplier { get => selectedSupplier; set { selectedSupplier = value; OnPropertyChanged(); } }
         public List<Supplier> Suppliers { get; set; }
-        public ObservableCollection<SpendedMaterial> SelectedMaterials
+        public ObservableCollection<DeliveryMaterial> SelectedMaterials
         {
             get { return selectedMaterials; }
             set { selectedMaterials = value; OnPropertyChanged(); }
@@ -59,8 +60,9 @@ namespace AppleRepair.Views.Windows
         }
         private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var material = ((sender as PackIcon).Parent as Grid).DataContext as SpendedMaterial;
+            var material = ((sender as PackIcon).Parent as Grid).DataContext as DeliveryMaterial;
             SelectedMaterials.Remove(material);
+
             UpdateTotalPrice();
         }
         private void SpendedMaterial_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -79,7 +81,7 @@ namespace AppleRepair.Views.Windows
 
                     if (SelectedMaterials.FirstOrDefault(p => p.Material.Id == material.Id) == null)
                     {
-                        var spendedMaterial = new SpendedMaterial(materialsListWindow.SelectedMaterial, 1);
+                        var spendedMaterial = new DeliveryMaterial(materialsListWindow.SelectedMaterial, 1);
                         spendedMaterial.PropertyChanged += SpendedMaterial_PropertyChanged;
                         SelectedMaterials.Add(spendedMaterial);
                         UpdateTotalPrice();
@@ -88,6 +90,41 @@ namespace AppleRepair.Views.Windows
                     {
                         MessageBox.Show("Материал уже в списке!");
                     }
+                }
+            }
+        }
+        private async void delivery_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new AppleRepairContext())
+            {
+                if (SelectedMaterials.Count > 0)
+                {
+                    var delivery = new Delivery
+                    {
+                        Date = DateTime.Now.ToLocalTime(),
+                        SupplierId = SelectedSupplier.Id,
+                    };
+                    delivery.MaterialInDelivery = new List<MaterialInDelivery>();
+                    foreach (var item in SelectedMaterials)
+                    {
+                        delivery.MaterialInDelivery.Add(new MaterialInDelivery { Amount = item.Amount, MaterialId = item.Material.Id });
+                    }
+                    await db.SaveChangesAsync();
+
+                    foreach (var item in delivery.MaterialInDelivery)
+                    {
+                        var material = db.Material.Find(item.MaterialId);
+                        material.Amount += item.Amount;
+                    }
+
+                    await db.SaveChangesAsync();
+
+                    MessageBox.Show("Поставка успешно заказана!");
+                    this.DialogResult = true;
+                }
+                else
+                {
+                    MessageBox.Show("В поставку не входит ни одного материала!");
                 }
             }
         }

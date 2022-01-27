@@ -243,7 +243,6 @@ namespace AppleRepair.Views.Pages
                     if (finishOrderWindow.ShowDialog() == true)
                     {
                         await Task.Run(LoadOrders);
-                       // await Task.Run(RefreshOrders);
                     }
                 }
                 else
@@ -314,10 +313,8 @@ namespace AppleRepair.Views.Pages
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var orderWindow = new OrderWindow(true, SelectedOrder);
-            if (orderWindow.ShowDialog() == true)
-            {
-                
-            }
+            orderWindow.ShowDialog();
+            
         }
     }
 }

@@ -36,7 +36,7 @@
                 <DataGridTextColumn Header="Номер телефона" Width="*" Binding="{Binding PhoneNumber, StringFormat={}{0:+# (###) ###-####}}"/>
             </DataGrid.Columns>
             <DataGrid.Resources>
-                <Style TargetType="DataGridRow">
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource MaterialDesignDataGridRow}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
                 </Style>
             </DataGrid.Resources>
@@ -49,7 +49,6 @@
                 <Button Foreground="White" x:Name="Forward" Content="→" Width="50" FontSize="20" Margin="0,0,5,0" Click="Forward_Click"/>
                 <Button Foreground="White" x:Name="ToLast" Content="»" Width="50" FontSize="20" Click="ToLast_Click"/>
             </StackPanel>
-
         </Grid>
 
         <Button VerticalAlignment="Bottom" Content="Отмена" Width="150" Foreground="White" Margin="5,5,5,10" Grid.Row="1" HorizontalAlignment="Right" Click="Button_Click" Cursor="Hand" Height="32"/>

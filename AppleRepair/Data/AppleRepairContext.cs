@@ -8,7 +8,7 @@ namespace AppleRepair.Data
     public partial class AppleRepairContext : DbContext
     {
         public AppleRepairContext()
-            : base("name=AppleRepairContext35")
+            : base("name=AppleRepairContext")
         {
 
         }
@@ -56,8 +56,7 @@ namespace AppleRepair.Data
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Delivery>()
-                .Property(e => e.Date)
-                .IsUnicode(false);
+                .Property(e => e.Date);
 
             modelBuilder.Entity<Delivery>()
                 .HasMany(e => e.MaterialInDelivery)

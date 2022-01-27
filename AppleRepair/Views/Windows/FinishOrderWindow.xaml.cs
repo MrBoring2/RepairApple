@@ -119,9 +119,25 @@ namespace AppleRepair.Views.Windows
                     {
                         order.MaterialToOrder.Add(new MaterialToOrder { MaterialId = item.Material.Id, Amount = item.Amount, OrderId = order.Id });
                     }
+
                     order.Status = "Завершён";
-                    await Task.Run(() => db.SaveChangesAsync());
-                    MessageBox.Show("Заказ успешно закончен!");
+                    foreach (var item in order.MaterialToOrder)
+                    {
+                        var material = db.Material.Find(item.MaterialId);
+                        if (material.Amount - item.Amount >= 0)
+                        {
+                            material.Amount -= (int)item.Amount;
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Не хватает количества!");
+                            return;
+                        }
+
+                        await db.SaveChangesAsync();
+                    }
+
                     this.DialogResult = true;
                 }
             }

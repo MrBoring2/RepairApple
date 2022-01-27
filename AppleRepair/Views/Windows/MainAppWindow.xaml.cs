@@ -82,6 +82,11 @@ namespace AppleRepair.Views.Windows
             {
                 new ItemMenu("Выход", MaterialDesignThemes.Wpf.PackIconKind.LocationExit, null)
             };
+
+            if(UserService.Instance.CurrentUser.RoleId == 2)
+            {
+                MenuItems.Add(new ItemMenu("Сотрудники", PackIconKind.Worker, new Uri("Views/Pages/EmployeesListPage.xaml", UriKind.Relative)));
+            }
         }
         private void LoadUser()
         {

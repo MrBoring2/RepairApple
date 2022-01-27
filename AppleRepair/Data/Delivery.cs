@@ -18,8 +18,7 @@ namespace AppleRepair.Data
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         public int SupplierId { get; set; }
 

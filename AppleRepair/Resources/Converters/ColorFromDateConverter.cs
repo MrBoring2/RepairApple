@@ -27,7 +27,7 @@ namespace AppleRepair.Resources.Converters
                 }
                 else if ((order.EndDate.Date - DateTime.Now.Date).Days <= 0)
                 {
-                    return (SolidColorBrush)new BrushConverter().ConvertFrom("#FFCCBC");
+                    return (SolidColorBrush)new BrushConverter().ConvertFrom("#FF867C");
                 }
                 else
                 {
@@ -36,7 +36,7 @@ namespace AppleRepair.Resources.Converters
             }
             else if (order.Status == "Отменён")
             {
-                return (SolidColorBrush)new BrushConverter().ConvertFrom("#FF8A65");
+                return (SolidColorBrush)new BrushConverter().ConvertFrom("#FE574E");
             }
             else
             {

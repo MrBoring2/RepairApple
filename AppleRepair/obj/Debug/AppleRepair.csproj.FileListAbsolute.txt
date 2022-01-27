@@ -211,7 +211,6 @@ C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\bin\Debug\pt-BR\MaterialDesi
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\bin\Debug\Ru\MaterialDesignExtensions.resources.dll
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\bin\Debug\ru-ru\MaterialDesignExtensions.resources.dll
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\bin\Debug\uz-Latn-UZ\MaterialDesignExtensions.resources.dll
-C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Resources\Styles\ListViewStyle.baml
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Resources\Styles\MainControlsTemplates.baml
 C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Resources\Styles\WindowStyle.baml
@@ -331,3 +330,11 @@ C:\Users\user35.CHENK\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\Delivery
 C:\Users\user35.CHENK\GIT\RepairApple\AppleRepair\obj\Debug\Views\Pages\DeliveryPage.baml
 C:\Users\user35.CHENK\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\DeliveryWindow.g.cs
 C:\Users\user35.CHENK\GIT\RepairApple\AppleRepair\obj\Debug\Views\Windows\DeliveryWindow.baml
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Views\Windows\DeliveryWindow.g.cs
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Views\Windows\DeliveryWindow.baml
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Resources\Styles\DataGridStyle.baml
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\AppleRepair.csproj.AssemblyReference.cache
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Views\Pages\EmployeesListPage.g.cs
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Views\Pages\EmployeesListPage.baml
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Views\Windows\EmployeeWindow.g.cs
+C:\Users\user452.CHENK\.ssh\RepairApple\AppleRepair\obj\Debug\Views\Windows\EmployeeWindow.baml

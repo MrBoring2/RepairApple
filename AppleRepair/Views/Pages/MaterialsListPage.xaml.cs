@@ -43,8 +43,18 @@ namespace AppleRepair.Views.Pages
 
         public MaterialsListPage()
         {
+            InitializeComponent();
+            DataContext = this;
+            if (UserService.Instance.CurrentUser.RoleId == 2)
+            {
+                AdminVisibility = Visibility.Visible;
+            }
+            else
+            {
+                AdminVisibility = Visibility.Hidden;
+            }
             InitializeFields();
-            
+            //OnPropertyChanged(nameof(DisplayedMaterials));
         }
         public MaterialsListPage(bool isModel = false) : this()
         {
@@ -114,26 +124,24 @@ namespace AppleRepair.Views.Pages
             ItemsPerPage = 20;
             search = String.Empty;
 
-             LoadMaterials();
+            await Task.Run(LoadMaterials);
 
-             LoadTypes();
-            LoadSort();
-             LoadRemoveCheckCollection();
+            await Task.Run(LoadTypes);
+            await Task.Run(LoadSort);
+            await Task.Run(LoadRemoveCheckCollection);
 
-            IsAcsending = true;
+            isAcsending = true;
 
-           
-            if (UserService.Instance.CurrentUser.RoleId == 2)
-            {
-                AdminVisibility = Visibility.Visible;
-            }
-            else
-            {
-                AdminVisibility = Visibility.Hidden;
-            }
-            InitializeComponent();
 
-            DataContext = this;
+            await Task.Run(RefreshMaterials);
+
+            OnPropertyChanged(nameof(MaterialTypes));
+            OnPropertyChanged(nameof(RemoveCheckCollection));
+            OnPropertyChanged(nameof(SortParams));
+            OnPropertyChanged(nameof(SelectedSort));
+            OnPropertyChanged(nameof(SelectedMaterialType));
+            OnPropertyChanged(nameof(SelectedRemoveCheck));
+            OnPropertyChanged(nameof(IsAcsending));
         }
 
         private void LoadRemoveCheckCollection()
@@ -237,25 +245,30 @@ namespace AppleRepair.Views.Pages
         {
             get
             {
-                //Фильтруем наш список по поисковой строке
-                var list = Materials
-                         .Where(p => p.Name.ToLower().Contains(Search.ToLower())).ToList();
-
-                //Фильтруем список клиентов по полу
-                list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
-
-                if (SelectedRemoveCheck == "Есть")
+                if (Materials != null)
                 {
-                    list = list.Where(p => p.IsActive == false).ToList();
-                }
-                else if (SelectedRemoveCheck == "Отсутствует")
-                {
-                    list = list.Where(p => p.IsActive == true).ToList();
-                }
+                    //Фильтруем наш список по поисковой строке
+                    var list = Materials
+                             .Where(p => p.Name.ToLower().Contains(Search.ToLower())).ToList();
 
-                return (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) > 0 ? (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) : 1;
+                    //Фильтруем список клиентов по полу
+                    list = list.Where(p => SelectedMaterialType != "Все" ? p.MaterialType.Name.Equals(SelectedMaterialType) : p.MaterialType.Name.Contains("")).ToList();
+
+                    if (SelectedRemoveCheck == "Есть")
+                    {
+                        list = list.Where(p => p.IsActive == false).ToList();
+                    }
+                    else if (SelectedRemoveCheck == "Отсутствует")
+                    {
+                        list = list.Where(p => p.IsActive == true).ToList();
+                    }
+
+                    return (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) > 0 ? (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) : 1;
+                }
+                else return 1;
             }
         }
+
         private void BasePage_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -350,6 +363,16 @@ namespace AppleRepair.Views.Pages
                     await Task.Run(() => db.SaveChangesAsync());
                     await Task.Run(RefreshMaterials);
                 }
+            }
+        }
+
+        private async void deliveryMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            var deliveryWindow = new DeliveryWindow();
+            if (deliveryWindow.ShowDialog() == true)
+            {
+                await Task.Run(LoadMaterials);
+                await Task.Run(RefreshMaterials);
             }
         }
     }
