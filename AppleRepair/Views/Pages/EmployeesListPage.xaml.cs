@@ -28,6 +28,7 @@ namespace AppleRepair.Views.Pages
         private int currentPage;
         private int itemsPerPage;
         private string search;
+        private string selectedRemoveCheck;
         private ObservableCollection<Employee> displayedEmployees;
         private Employee selectedEmployee;
         public EmployeesListPage()
@@ -38,7 +39,8 @@ namespace AppleRepair.Views.Pages
 
         public List<Employee> Employees { get; set; }
         public Employee SelectedEmployee { get { return selectedEmployee; } set { selectedEmployee = value; OnPropertyChanged(); } }
-
+        public List<string> RemoveCheckCollection { get; set; }
+        public string SelectedRemoveCheck { get => selectedRemoveCheck; set { selectedRemoveCheck = value; OnPropertyChanged(); RefreshEmployees(); } }
         public int ItemsPerPage
         {
             get { return itemsPerPage; }
@@ -76,7 +78,7 @@ namespace AppleRepair.Views.Pages
             search = String.Empty;
 
             await Task.Run(LoadEmployees);
-
+            await Task.Run(LoadRemoveCheckCollection);
             IsAcsending = true;
             InitializeComponent();
             DataContext = this;
@@ -86,11 +88,21 @@ namespace AppleRepair.Views.Pages
         {
             using (var db = new AppleRepairContext())
             {
-                Employees = new List<Employee>(db.Employee);
+                Employees = new List<Employee>(db.Employee.Include("Role"));
             }
         }
-     
-        private List<Employee> SortMaterials()
+        private void LoadRemoveCheckCollection()
+        {
+            RemoveCheckCollection = new List<string>
+            {
+                "Все",
+                "Есть",
+                "Отсутствует"
+            };
+            selectedRemoveCheck = RemoveCheckCollection.FirstOrDefault();
+        }
+
+        private List<Employee> SortEmployees()
         {
             if (IsAcsending)
             {
@@ -108,11 +120,18 @@ namespace AppleRepair.Views.Pages
                 currentPage = MaxPage - 1;
             }
 
-            var list = SortMaterials();
+            var list = SortEmployees();
 
             list = list
-              .Where(p => p.FullName.ToLower().Contains(Search.ToLower())).ToList();           
-
+              .Where(p => p.FullName.ToLower().Contains(Search.ToLower())).ToList();
+            if (SelectedRemoveCheck == "Есть")
+            {
+                list = list.Where(p => p.IsActive == false).ToList();
+            }
+            else if (SelectedRemoveCheck == "Отсутствует")
+            {
+                list = list.Where(p => p.IsActive == true).ToList();
+            }
             list = list.Skip(currentPage * ItemsPerPage).Take(ItemsPerPage).ToList();
 
             DisplayedEmployees = new ObservableCollection<Employee>(list);
@@ -135,7 +154,14 @@ namespace AppleRepair.Views.Pages
                 //Фильтруем наш список по поисковой строке
                 var list = Employees
                          .Where(p => p.FullName.ToLower().Contains(Search.ToLower())).ToList();
-    
+                if (SelectedRemoveCheck == "Есть")
+                {
+                    list = list.Where(p => p.IsActive == false).ToList();
+                }
+                else if (SelectedRemoveCheck == "Отсутствует")
+                {
+                    list = list.Where(p => p.IsActive == true).ToList();
+                }
 
                 return (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) > 0 ? (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage) : 1;
             }
@@ -219,10 +245,11 @@ namespace AppleRepair.Views.Pages
                 }
             }
         }
+ 
         private async void addNewEmployee_Click(object sender, RoutedEventArgs e)
         {
-            var modelWindow = new ModelWindow();
-            if (modelWindow.ShowDialog() == true)
+            var employeeWindow = new EmployeeWindow();
+            if (employeeWindow.ShowDialog() == true)
             {
                 await Task.Run(LoadEmployees);
                 await Task.Run(RefreshEmployees);

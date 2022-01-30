@@ -193,7 +193,7 @@ namespace AppleRepair.Views.Windows
 
                         material.Price = Price;
                         await Task.Run(() => db.SaveChangesAsync());
-                        MessageBox.Show("Материал успешно изменён!");
+                        MessageBox.Show("Материал успешно обновлён!");
                         this.DialogResult = true;
 
                     }

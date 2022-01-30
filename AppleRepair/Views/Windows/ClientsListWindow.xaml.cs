@@ -1,4 +1,5 @@
 ﻿using AppleRepair.Data;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,13 +22,14 @@ namespace AppleRepair.Views.Windows
     /// </summary>
     public partial class ClientsListWindow : BaseWindow
     {
+        private bool isAcsending;
         private int itemsPerPage;
         private string search;
         private int currentPage;
         private ObservableCollection<Client> displayedClients;
         private Client selectedClient;
         public ClientsListWindow()
-        {          
+        {
             InitializeFields();
             InitializeComponent();
             DataContext = this;
@@ -42,9 +44,10 @@ namespace AppleRepair.Views.Windows
             //await Task.Run(LoadColors);
 
         }
+        public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshClients(); OnPropertyChanged(); } }
         public Client SelectedClient { get { return selectedClient; } set { selectedClient = value; OnPropertyChanged(); } }
         public List<Client> Clients { get; set; }
-       // public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
+        // public bool IsAcsending { get { return isAcsending; } set { isAcsending = value; RefreshMaterials(); OnPropertyChanged(); } }
         public ObservableCollection<Client> DisplayedClients { get => displayedClients; set { displayedClients = value; OnPropertyChanged(); } }
         public string DisplayedPages
         {
@@ -83,24 +86,22 @@ namespace AppleRepair.Views.Windows
                 await Task.Run(() => Clients = new List<Client>(db.Client));
                 //DisplayedClients = new ObservableCollection<Client>(Clients);
 
-               // IsAcsending = true;
+                IsAcsending = true;
                 await Task.Run(() => RefreshClients());
-                
+
 
             }
         }
-
-        private List<Material> SortMaterials()
+        private List<Client> SortClients()
         {
-            //if (IsAcsending)
-            //{
-            //    return Orders.OrderBy(p => p.GetValue(SelectedSort.Property)).ToList();
-            //}
-            //else
-            //{
-            //    return Materials.OrderByDescending(p => p.GetValue(SelectedSort.Property)).ToList();
-            //}
-            return null;
+            if (IsAcsending)
+            {
+                return Clients.OrderBy(p => p.FullName).ToList();
+            }
+            else
+            {
+                return Clients.OrderByDescending(p => p.FullName).ToList();
+            }
         }
         private void RefreshClients()
         {
@@ -110,7 +111,7 @@ namespace AppleRepair.Views.Windows
             }
 
 
-            var list = Clients; // SortMaterials();
+            var list = SortClients(); // SortMaterials();
 
             list = list
               .Where(p => p.Email.ToString().Contains(Search.ToLower()) || p.FullName.ToLower().Contains(Search.ToLower()) || p.PhoneNumber.Contains(Search.ToLower())).ToList();
@@ -196,12 +197,74 @@ namespace AppleRepair.Views.Windows
 
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            this.DialogResult = true;
+            if (SelectedClient.IsActive == false)
+            {
+                MessageBox.Show("Клиент не активен!");
+            }
+            else
+            {
+                this.DialogResult = true;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
+        }
+        private async void edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = (icon.Parent as StackPanel).Parent as Grid;
+            var client = par.DataContext as Client;
+            var clientWindow = new ClientWindow(false, client) { Title = "APPLE СЕРВИС | Редактирование клиента" };
+            if (clientWindow.ShowDialog() == true)
+            {
+                await Task.Run(LoadClients);
+                await Task.Run(RefreshClients);
+            }
+        }
+
+        private async void remove_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = (icon.Parent as StackPanel).Parent as Grid;
+            var client = par.DataContext as Client;
+            using (var db = new AppleRepairContext())
+            {
+                if (client != null)
+                {
+                    db.Client.Attach(client);
+                    client.IsActive = false;
+                    await Task.Run(() => db.SaveChangesAsync());
+                    await Task.Run(RefreshClients);
+                }
+            }
+        }
+
+        private async void addNewClient_Click(object sender, RoutedEventArgs e)
+        {
+            var clientWindow = new ClientWindow();
+            if (clientWindow.ShowDialog() == true)
+            {
+                await Task.Run(LoadClients);
+            }
+        }
+
+        private async void restore_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var icon = sender as PackIcon;
+            var par = ((icon.Parent as StackPanel).Parent as Grid);
+            var client = par.DataContext as Client;
+            using (var db = new AppleRepairContext())
+            {
+                if (client != null)
+                {
+                    db.Client.Attach(client);
+                    client.IsActive = true;
+                    await Task.Run(() => db.SaveChangesAsync());
+                    await Task.Run(LoadClients);
+                }
+            }
         }
     }
 }

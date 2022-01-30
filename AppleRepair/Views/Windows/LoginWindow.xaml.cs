@@ -97,11 +97,19 @@ namespace AppleRepair.Views.Windows
                 await Task.Run(() => user = db.Employee.FirstOrDefault(p => p.Login.Equals(Login) && p.Password.Equals(passwordText.Password)));
                 if (user != null)
                 {
-                    UserService.Instance.SetEmployee(user);
-                    var mainWindow = new MainAppWindow();
-                    mainWindow.Show();
-                    this.Close();
-                    MessageBox.Show("Добро пожаловать!");
+                    if (user.IsActive == false)
+                    {
+                        IsBtnEnabled = true;
+                        MessageBox.Show("Пользователь не активен!");
+                    }
+                    else
+                    {
+                        UserService.Instance.SetEmployee(user);
+                        var mainWindow = new MainAppWindow();
+                        mainWindow.Show();
+                        this.Close();
+                        MessageBox.Show("Добро пожаловать!");
+                    }
                 }
                 else
                 {

@@ -306,7 +306,14 @@ namespace AppleRepair.Views.Pages
         {
             if (isModal)
             {
-                onSendMaterial?.Invoke(SelectedMaterial);
+                if (SelectedMaterial.IsActive == false)
+                {
+                    MessageBox.Show("Материал не активен!");
+                }
+                else
+                {
+                    onSendMaterial?.Invoke(SelectedMaterial);
+                }
             }
         }
         private async void edit_MouseDown(object sender, MouseButtonEventArgs e)

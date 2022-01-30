@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+                  WindowStartupLocation="CenterScreen" 
          xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         Title="APPLE СЕРВИС | Поставка материалов" Height="450" Width="800" Icon="/AppleRepair;component/Resources/Images/logo.png">
     <Grid>

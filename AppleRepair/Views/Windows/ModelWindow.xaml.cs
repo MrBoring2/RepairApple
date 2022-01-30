@@ -108,7 +108,7 @@ namespace AppleRepair.Views.Windows
                             if (db.PhoneModel.FirstOrDefault(p => p.ModelName.Equals(currentPhoneModel.ModelName) && p.Color.Id == SelectedColor.Id) == null)
                             {
                                 await db.SaveChangesAsync();
-                                MessageBox.Show("Модель успешно создана!");
+                                MessageBox.Show("Модель успешно обновлена!");
                                 this.DialogResult = true;
                             }
                             else

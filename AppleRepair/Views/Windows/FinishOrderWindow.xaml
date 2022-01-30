@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AppleRepair.Views.Windows"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         mc:Ignorable="d"
+                  WindowStartupLocation="CenterScreen" 
                   ResizeMode="NoResize"
                   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"

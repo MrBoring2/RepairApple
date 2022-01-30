@@ -71,7 +71,7 @@ namespace AppleRepair.Views.Windows
             }
         }
         public Visibility IsVisibility { get => visibility; set { visibility = value; OnPropertyChanged(); } }
-        public bool IsElEnabled { get => isEnabled; set { isEnabled = value;OnPropertyChanged(); } }
+        public bool IsElEnabled { get => isEnabled; set { isEnabled = value; OnPropertyChanged(); } }
 
         public string Description { get { return description; } set { description = value; OnPropertyChanged(); } }
         public DateTime Date { get { return date; } set { date = value; OnPropertyChanged(); } }
@@ -139,40 +139,47 @@ namespace AppleRepair.Views.Windows
             {
                 using (var db = new AppleRepairContext())
                 {
-
-                    var order = new Order
+                    if (db.Client.Find(SelectedClient.Id).IsActive == false)
                     {
-                        StartDate = DateTime.Now.ToLocalTime(),
-                        EmployeeId = UserService.Instance.CurrentUser.Id,
-                        ClientId = SelectedClient.Id,
-                        EndDate = new DateTime(Date.Year, Date.Month, Date.Day, Time.Hour, Time.Minute, Time.Second),
-                        Decription = Description,
-
-                        PhoneModelId = SelectedModel.Id,
-                        Status = "В процессе выполнения",
-                    };
-                    var services = db.Service.Where(p => SelectedServices.Contains(p.Name)).ToList();
-
-                    foreach (var item in services)
-                    {
-                        order.Service.Add(db.Service.FirstOrDefault(p => p.Name.Equals(item.Name)));
-                    }
-                    order.Price = services.Sum(p => p.Price);
-                    db.Order.Add(order);
-
-                    if (order.EndDate >= DateTime.Now.AddDays(1))
-                    {
-                        await db.SaveChangesAsync();
-                        MessageBox.Show("Заказ успешно создан!");
-                        this.DialogResult = true;
+                        MessageBox.Show("Клиент не активен!");
                     }
                     else
                     {
-                        MessageBox.Show("Окончание заказа должно быть минимум через день после его начала!");
+                        var order = new Order
+                        {
+                            StartDate = DateTime.Now.ToLocalTime(),
+                            EmployeeId = UserService.Instance.CurrentUser.Id,
+                            ClientId = SelectedClient.Id,
+                            EndDate = new DateTime(Date.Year, Date.Month, Date.Day, Time.Hour, Time.Minute, Time.Second),
+                            Decription = Description,
+
+                            PhoneModelId = SelectedModel.Id,
+                            Status = "В процессе выполнения",
+                        };
+                        var services = db.Service.Where(p => SelectedServices.Contains(p.Name)).ToList();
+
+                        foreach (var item in services)
+                        {
+                            order.Service.Add(db.Service.FirstOrDefault(p => p.Name.Equals(item.Name)));
+                        }
+                        order.Price = services.Sum(p => p.Price);
+                        db.Order.Add(order);
+
+                        if (order.EndDate >= DateTime.Now.AddDays(1))
+                        {
+                            await db.SaveChangesAsync();
+                            MessageBox.Show("Заказ успешно создан!");
+                            this.DialogResult = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Окончание заказа должно быть минимум через день после его начала!");
+                        }
                     }
                 }
             }
         }
+
 
         private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
