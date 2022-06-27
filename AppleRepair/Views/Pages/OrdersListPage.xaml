@@ -1,0 +1,92 @@
+﻿<local:BasePage x:Class="AppleRepair.Views.Pages.OrdersListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AppleRepair.Views.Pages"
+      mc:Ignorable="d" 
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+                  
+        FontFamily="{materialDesign:MaterialDesignFont}"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="900" d:DesignWidth="1100" Loaded="BasePage_Loaded"
+      Title="OrderPage" >
+    <local:BasePage.Resources>
+        <DataTemplate x:Key="ContextMenuTemplate">
+            <Grid>
+                <TextBlock Text="{Binding Status}" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon x:Name="check" Kind="Check" Foreground="#43A047" ToolTip="Завершить заказ" Background="Transparent" MouseDown="check_MouseDown" Width="25" VerticalAlignment="Center" Height="25" Margin="5,0,5,0"/>
+                    <materialDesign:PackIcon x:Name="cancel" Kind="Cancel" Foreground="#FF0000" Background="Transparent" ToolTip="Отменить заказ" MouseDown="cancel_MouseDown" Width="25" VerticalAlignment="Center" Height="25" Margin="5,0,5,0"/>
+                    <materialDesign:PackIcon x:Name="restore" Kind="Restore" Foreground="#FF9F57" Background="Transparent" ToolTip="Восстановить заказ" MouseDown="restore_MouseDown" Width="25" VerticalAlignment="Center" Height="25" Margin="5,0,5,0"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <Style TargetType="DataGridRow" BasedOn="{StaticResource MaterialDesignDataGridRow}">
+            <Setter Property="Background" Value="{Binding ., Converter={StaticResource colorFromDate}}"/>
+            <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+        </Style>
+    </local:BasePage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="323*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox VerticalAlignment="Top" Margin="5,5,5,0" materialDesign:HintAssist.Hint="Введите номер заказа или ФИО клиента для поиска..." Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Grid.ColumnSpan="2" Height="30" Cursor="IBeam"/>
+            <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10">
+                <TextBlock Text="Модель телефона" FontSize="14" TextAlignment="Center"/>
+                <ComboBox FontSize="14" ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel}"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Grid.Column="1" Margin="5,5,5,10">
+                <TextBlock Text="Статус заказа" FontSize="14" TextAlignment="Center"/>
+                <ComboBox FontSize="14" ItemsSource="{Binding Statuses}" SelectedItem="{Binding SelectedStatus}"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Margin="5,5,5,10" Grid.Column="3">
+                <TextBlock Text="Сортировка" FontSize="14" TextAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <TextBlock FontSize="14" Margin="5,0,10,0" Text="По возрастанию" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <CheckBox FontSize="14" IsChecked="{Binding IsAcsending}" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </StackPanel>
+
+
+        </Grid>
+        <Button x:Name="addNewOrder" Grid.Row="1" RenderOptions.BitmapScalingMode="HighQuality" ToolTip="Добавить заказ" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignIconButton}" Margin="15,5" Width="30" Height="30" VerticalAlignment="Top" Cursor="Hand" Click="addNewOrder_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/Images/Vector-1.png" RenderOptions.BitmapScalingMode="HighQuality"  />
+            </Button.Background>
+        </Button>
+        <DataGrid IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Grid.Row="1" ItemsSource="{Binding DisplayedOrders}" SelectedItem="{Binding SelectedOrder}" Margin="0,40,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер заказа" Width="0.8*" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Клиент" Width="1.7*" Binding="{Binding Client.FullName}"/>
+                <DataGridTextColumn Header="Модель телефона" Width="*" Binding="{Binding PhoneModel.ModelName}"/>
+                <DataGridTextColumn Header="Начала заказа" Width="*" Binding="{Binding StartDate, StringFormat={}{0:dd.MM.yyy HH:mm:ss}}"/>
+                <DataGridTextColumn Header="Окончание заказа" Width="*" Binding="{Binding EndDate, StringFormat={}{0:dd.MM.yyy HH:mm:ss}}"/>
+                <DataGridTemplateColumn Header="Статус" Width="2*" CellTemplate="{StaticResource ContextMenuTemplate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Height="40" Orientation="Horizontal">
+                <Button Foreground="White" x:Name="ToFirst" Content="«" Width="50" FontSize="20" Click="ToFirst_Click" Cursor="Hand"/>
+                <Button Foreground="White" x:Name="Back" Content="←" Width="50" FontSize="20" Margin="5,0,0,0" Click="Back_Click" Cursor="Hand"/>
+                <TextBlock Width="50" Height="25" FontSize="16" Margin="5,0,5,0" Text="{Binding DisplayedPages}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                <Button Foreground="White" x:Name="Forward" Content="→" Width="50" FontSize="20" Margin="0,0,5,0" Click="Forward_Click"/>
+                <Button Foreground="White" x:Name="ToLast" Content="»" Width="50" FontSize="20" Click="ToLast_Click"/>
+            </StackPanel>
+
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,20,5,5"/>
+
+    </Grid>
+</local:BasePage>

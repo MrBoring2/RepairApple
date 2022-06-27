@@ -1,0 +1,42 @@
+﻿<local:BaseWindow x:Class="AppleRepair.Views.Windows.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppleRepair.Views.Windows"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+                  
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        TextElement.FontSize="20"
+        mc:Ignorable="d"
+        BorderBackgroundBrush="#2196F3"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="APPLE СЕРВИС | Авторизация" Height="494" Width="629" Icon="/Resources/Images/icon.ico" RenderOptions.BitmapScalingMode="HighQuality">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="168*"/>
+            <ColumnDefinition Width="239*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Resources/Images/logo.png" Margin="10,10,10,0" Height="150" VerticalAlignment="Top" Stretch="Uniform" Grid.ColumnSpan="1"/>
+
+        <StackPanel Margin="5,170,5,60">
+            <TextBlock Text="Авторизация" Foreground="DimGray" FontSize="20" HorizontalAlignment="Center" Margin="0,20"/>
+            <Grid Margin="0,5,0,0">
+                <materialDesign:PackIcon Foreground="#29B6F6" Kind="AccountOutline" Margin="5" Width="30" Height="30"/>
+                <TextBox Margin="40,5,10,0" TextWrapping="Wrap" Text="{Binding Login}" materialDesign:HintAssist.Hint="Логин" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+            </Grid>
+            <Grid>
+                <materialDesign:PackIcon Foreground="#29B6F6" Kind="PasswordOutline" Margin="5" Width="30" Height="30"/>
+                <PasswordBox x:Name="passwordText" Margin="40,5,10,0" materialDesign:HintAssist.Hint="Пароль" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="IBeam"/>
+            </Grid>
+        </StackPanel>
+
+        <Button x:Name="LoginButton" Content="Войти" Margin="0,0,0,10" Grid.Column="0" Foreground="White" IsEnabled="{Binding IsBtnEnabled}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="230" Click="LoginButton_Click" Grid.ColumnSpan="1" Cursor="Hand"/>
+        <Image Source="/Resources/Images/apple_background.png" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Stretch="UniformToFill" Margin="0,0,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="0,47,0,0" TextWrapping="Wrap" Foreground="White" FontSize="25" Text="Добро пожаловать!" VerticalAlignment="Top"/>
+    </Grid>
+</local:BaseWindow>

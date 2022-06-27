@@ -1,0 +1,50 @@
+﻿<local:BaseWindow x:Class="AppleRepair.Views.Windows.EmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppleRepair.Views.Windows"
+        mc:Ignorable="d"
+                  WindowStartupLocation="CenterScreen" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="APPLE СЕРВИС | Добавление сотрудника" Height="450" Width="401" Icon="/Resources/Images/logo.png">
+    <Grid>
+        <Border Margin="20,20,20,20" CornerRadius="30" BorderBrush="#9E9E9E" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,0,0">
+
+                    <Grid>
+                        <TextBlock FontSize="14" Text="ФИО" Margin="15,10,15,0"/>
+                        <TextBox materialDesign:HintAssist.Hint="Введите ФИО сотрудника" FontSize="14" VerticalAlignment="Top" Text="{Binding FullName}" Grid.ColumnSpan="1" Margin="15,25,15,0" Cursor="IBeam"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock FontSize="14" Text="Логин" Margin="15,10,15,0"/>
+                        <TextBox materialDesign:HintAssist.Hint="Введите логин сотрудника" FontSize="14" VerticalAlignment="Top" Text="{Binding Login}" Grid.ColumnSpan="1" Margin="15,25,15,0" Cursor="IBeam"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock FontSize="14" Text="Пароль" Margin="15,10,15,0"/>
+                        <TextBox  materialDesign:HintAssist.Hint="Введите пароль сотрудника" FontSize="14" VerticalAlignment="Top" Text="{Binding Password}" Grid.ColumnSpan="1" Margin="15,25,15,0" Cursor="IBeam"/>
+                    </Grid>
+                 
+                    <Grid>
+                        <TextBlock FontSize="14" Text="Роль" Margin="15,10,15,0"/>
+                        <ComboBox FontSize="14" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole}" Margin="15,25,15,0" DisplayMemberPath="Name"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="100*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+
+                    <StackPanel/>
+                </StackPanel>
+
+                <Button x:Name="Save" Content="Сохранить" VerticalAlignment="Bottom" Margin="15,0,15,15" HorizontalAlignment="Center" Width="200" Foreground="White" Click="Save_Click" Cursor="Hand"/>
+            </Grid>
+        </Border> 
+    </Grid>
+</local:BaseWindow>
